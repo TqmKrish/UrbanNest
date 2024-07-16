@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./LoginComponent.css";
+import "./LoginComponent.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { moduleName } from "../../../GlobalVariables";
 
@@ -10,14 +10,21 @@ interface FormState {
 const LoginComponent: React.FC = () => {
   const [formState, setFormState] = useState<FormState>({});
   const [errors, setErrors] = useState<FormState>({});
+  const navigate = useNavigate();
+
+  let userDetails = {
+    name: "Krish Goyal",
+    role: "admin",
+    isLoggedIn: "true",
+    token: "1234567890",
+    tokenExpiryDateTime: new Date(new Date().getTime() + 15 * 60000),
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors: FormState = {};
@@ -32,7 +39,6 @@ const LoginComponent: React.FC = () => {
   };
 
   const validateAndLogin = (event: React.FormEvent) => {
-    let userRole: string = "admin";
     event.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -40,7 +46,8 @@ const LoginComponent: React.FC = () => {
     } else {
       // Handle login logic here
       console.log("Logging in with", formState);
-      navigate(`/${moduleName}/${userRole}`);
+      localStorage.setItem("userDetails", JSON.stringify(userDetails));
+      navigate(`/${moduleName}/${userDetails.role}`);
     }
   };
 
@@ -91,16 +98,16 @@ const LoginComponent: React.FC = () => {
             </span>
           </div>
 
-          <button className="my-3" type="submit">
+          <button className="my-3 auth-btns" type="submit">
             Login
           </button>
 
           <hr />
 
           <button
-            className="my-3"
+            className="my-3 auth-btns"
             type="submit"
-            style={{ background: "#e4d9c8" }}
+            style={{ background: "#e4d9c8", color: "white" }}
           >
             Sign in with Google
           </button>

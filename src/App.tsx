@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./App.scss";
 import { RouterProvider } from "react-router-dom";
 import { routes } from "./AppRouting";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

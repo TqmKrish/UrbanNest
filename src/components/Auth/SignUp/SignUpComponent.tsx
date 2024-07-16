@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SignUpComponent.css";
+import "./SignUpComponent.scss";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
@@ -90,16 +90,16 @@ const SignUpComponent = () => {
             )}
           </div>
 
-          <button className="my-3" type="submit">
+          <button className="my-3 auth-btns" type="submit">
             Sign Up
           </button>
 
           <hr />
 
           <button
-            className="my-3"
+            className="my-3 auth-btns"
             type="button"
-            style={{ background: "#e4d9c8" }}
+            style={{ background: "#e4d9c8", color: "white" }}
           >
             Sign up with Google
           </button>

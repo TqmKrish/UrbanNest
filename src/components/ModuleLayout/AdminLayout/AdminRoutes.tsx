@@ -8,7 +8,7 @@ import ProjectsComponent from "./ProjectsComponent/ProjectsComponent";
 
 const AdminRoutes = [
   {
-    path: "home",
+    path: "",
     element: <HomeComponent />,
     index: true,
   },
@@ -25,7 +25,7 @@ const AdminRoutes = [
     element: <ContactMeComponent />,
   },
   {
-    path: "users/:userName",
+    path: "users",
     element: <UserComponent />,
   },
 ];

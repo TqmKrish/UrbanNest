@@ -1,0 +1,60 @@
+.sidebar-wrapper {
+  background: #f0f8ff; /* Light blue background */
+  height: 100%;
+  transition: width 0.3s ease; /* Add transition for width */
+  min-height: 100vh;
+
+  &.open {
+    width: 16rem !important;
+  }
+
+  &.closed {
+    width: 4rem !important;
+
+    .brand-wrapper {
+      padding: 8px 0;
+    }
+
+    .app-logo {
+      width: 100%;
+    }
+
+    .nav-link {
+      padding: 6px 0px;
+    }
+  }
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+}
+
+.app-logo {
+  width: 48px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-list {
+  padding: 8px 10px;
+}
+
+.nav-link {
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.3s, color 0.3s;
+  &.active {
+    background: #e0f7fa; /* Light cyan background */
+    li {
+      color: #00796b; /* Teal text color */
+    }
+  }
+  &:hover {
+    background: #b2ebf2; /* Slightly darker cyan for hover */
+    color: #004d40; /* Darker teal for hover */
+  }
+}

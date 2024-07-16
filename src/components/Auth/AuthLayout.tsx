@@ -1,5 +1,5 @@
 import React from "react";
-import "./AuthLayout.css";
+import "./AuthLayout.scss";
 // import LoginComponent from "./Login/LoginComponent";
 import logo from "../../assets/auth-images/da-guojing-6888603_1920.jpg";
 import { Outlet } from "react-router-dom";

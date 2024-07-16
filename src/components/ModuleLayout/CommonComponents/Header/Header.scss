@@ -1,0 +1,21 @@
+header {
+  padding: 8px 20px;
+}
+
+.collapse-icon {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+button.header-btn {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: wheat;
+  margin: 0 4px;
+  border-radius: 12px;
+  font-size: 20px;
+  color: white;
+}

@@ -1,6 +1,6 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import "./NavbarComponent.css";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./NavbarComponent.scss";
 // import { Container, Nav, Navbar } from "react-bootstrap";
 import {
   Disclosure,
@@ -15,17 +15,26 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { moduleName } from "../../../../GlobalVariables";
 
 const NavbarComponent = () => {
-  let userName: string = "Krish";
+  const [current, setCurrent] = useState("Home");
+  const navigate = useNavigate();
+
   const navigation = [
-    { name: "Home", to: `/${moduleName}/admin/home`, current: true },
+    { name: "Home", to: `/${moduleName}/admin/login`, current: true },
     { name: "About", to: `/${moduleName}/admin/about`, current: false },
     { name: "Projects", to: `/${moduleName}/admin/projects`, current: false },
     { name: "Contact Us", to: `/${moduleName}/admin/contact`, current: false },
+    { name: "Users", to: `/${moduleName}/admin/users`, current: false },
   ];
 
-  function classNames(...classes: any) {
+  const classNames = (...classes: any) => {
     return classes.filter(Boolean).join(" ");
-  }
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <>
       {/* <Navbar bg="dark" data-bs-theme="dark">
@@ -141,8 +150,9 @@ const NavbarComponent = () => {
                       key={item.name}
                       to={item.to}
                       aria-current={item.current ? "page" : undefined}
+                      onClick={() => setCurrent(item.name)}
                       className={classNames(
-                        item.current
+                        item.name === current
                           ? "bg-gray-900 text-white"
                           : "text-gray-300 hover:bg-gray-700 hover:text-white",
                         "rounded-md px-3 py-2 text-sm font-medium"
@@ -177,7 +187,7 @@ const NavbarComponent = () => {
                     />
                   </MenuButton>
                 </div>
-                {/* <MenuItems
+                <MenuItems
                   transition
                   className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
@@ -199,13 +209,14 @@ const NavbarComponent = () => {
                   </MenuItem>
                   <MenuItem>
                     <Link
-                      to="#"
+                      to=""
+                      onClick={logout}
                       className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                     >
                       Sign out
                     </Link>
                   </MenuItem>
-                </MenuItems> */}
+                </MenuItems>
               </Menu>
             </div>
           </div>
