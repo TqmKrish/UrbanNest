@@ -13,9 +13,12 @@ const AuthRoutes = [
     element: <AuthLayout />,
     children: [
       {
+        path: "",
+        element: <LoginComponent />,
+      },
+      {
         path: "login",
         element: <LoginComponent />,
-        index: true,
       },
       {
         path: "forgot-password",

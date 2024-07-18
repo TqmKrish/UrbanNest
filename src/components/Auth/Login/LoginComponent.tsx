@@ -45,7 +45,6 @@ const LoginComponent: React.FC = () => {
       setErrors(validationErrors);
     } else {
       // Handle login logic here
-      console.log("Logging in with", formState);
       localStorage.setItem("userDetails", JSON.stringify(userDetails));
       navigate(`/${moduleName}/${userDetails.role}`);
     }

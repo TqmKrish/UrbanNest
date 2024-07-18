@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: #3e3e3e;
 }
 
 body,
@@ -22,10 +22,14 @@ body,
 }
 
 body {
-  background: rgb(251, 241, 231) !important;
+  background: #fbfbfb;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+svg {
+  font-size: 18px;
 }

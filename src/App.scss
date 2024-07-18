@@ -1,4 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+
 a {
   text-decoration: none !important;
   color: #3e3e3e;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
 }

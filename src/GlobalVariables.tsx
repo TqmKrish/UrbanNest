@@ -1,5 +1,5 @@
 export const appDetails = {
-  name: "App Name",
+  name: "UrbanNest",
   image: "",
   alt: "image-alt",
 };

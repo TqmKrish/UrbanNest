@@ -41,7 +41,6 @@ const SignUpComponent = () => {
       setErrors(validationErrors);
     } else {
       // Handle signup logic here
-      console.log("Signing up with", formState);
     }
   };
 
@@ -108,7 +107,10 @@ const SignUpComponent = () => {
 
           <div className="d-flex flex-column align-items-center">
             <span>
-              <Link to="/auth/login">
+              <Link
+                to="/auth/login"
+                className="d-flex gap-2 align-items-center"
+              >
                 <IoMdArrowBack /> Login
               </Link>
             </span>

@@ -1,0 +1,127 @@
+.sell-property-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.sell-property-form {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.sell-property-form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4f46e5;
+  font-size: 2.5em;
+  text-transform: uppercase;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.form-group:last-child {
+  margin-right: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1em;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.image-upload {
+  display: none;
+}
+
+.image-upload-label {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4f46e5;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-upload-label:hover {
+  background-color: #5952da;
+}
+
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.image-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background-color: #4f46e5;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #574feb;
+}

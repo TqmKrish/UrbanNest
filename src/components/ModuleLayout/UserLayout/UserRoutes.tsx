@@ -1,5 +1,5 @@
 import React from "react";
-import HomeComponent from "../AdminLayout/HomeComponent/HomeComponent";
+import HomeComponent from "../AdminLayout/HomeLayoutComponent/HomeComponent/HomeComponent";
 import AboutComponent from "../AdminLayout/AboutComponent/AboutComponent";
 import ContactMeComponent from "../AdminLayout/ContactMeComponent/ContactMeComponent";
 import UserComponent from "../AdminLayout/UsersComponent/UsersComponent";

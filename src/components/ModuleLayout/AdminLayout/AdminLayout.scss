@@ -1,10 +1,38 @@
 .module-wrapper {
+  display: flex;
   min-height: 100vh;
-  height: 100%;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex: 0 0 auto;
+  color: white;
+  transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+  width: 4rem;
+}
+
+.sidebar.expanded {
+  width: 16rem;
 }
 
 .main {
-  padding: 0px;
-  flex-grow: 1;
-  width: 1px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ecf0f1; /* Adjust according to your theme */
+}
+
+.header {
+  background-color: white; /* Adjust according to your theme */
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
 }

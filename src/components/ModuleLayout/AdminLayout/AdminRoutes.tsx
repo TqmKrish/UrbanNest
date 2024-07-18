@@ -1,16 +1,32 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import HomeComponent from "./HomeComponent/HomeComponent";
+import HomeComponent from "./HomeLayoutComponent/HomeComponent/HomeComponent";
 import AboutComponent from "./AboutComponent/AboutComponent";
 import ContactMeComponent from "./ContactMeComponent/ContactMeComponent";
 import UserComponent from "./UsersComponent/UsersComponent";
 import ProjectsComponent from "./ProjectsComponent/ProjectsComponent";
+import ViewComponent from "./HomeLayoutComponent/ViewComponent/ViewComponent";
+import HomeLayout from "./HomeLayoutComponent/HomeLayout";
+import { Navigate } from "react-router-dom";
 
 const AdminRoutes = [
   {
     path: "",
-    element: <HomeComponent />,
-    index: true,
+    element: <Navigate to="buy" />,
+  },
+  {
+    path: "buy",
+    element: <HomeLayout />,
+    children: [
+      {
+        path: "",
+        element: <HomeComponent />,
+        index: true,
+      },
+      {
+        path: ":id",
+        element: <ViewComponent />,
+      },
+    ],
   },
   {
     path: "about",

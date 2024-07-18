@@ -1,8 +1,10 @@
 .sidebar-wrapper {
-  background: #f0f8ff; /* Light blue background */
+  background: #fff; /* Light blue background */
   height: 100%;
   transition: width 0.3s ease; /* Add transition for width */
   min-height: 100vh;
+  border-right: 1px solid rgb(229, 231, 235);
+  overflow-x: hidden;
 
   &.open {
     width: 16rem !important;
@@ -13,14 +15,16 @@
 
     .brand-wrapper {
       padding: 8px 0;
+      justify-content: center;
     }
 
     .app-logo {
-      width: 100%;
+      width: 40px;
     }
 
     .nav-link {
       padding: 6px 0px;
+      justify-content: center;
     }
   }
 }
@@ -33,6 +37,7 @@
 }
 
 .app-logo {
+  min-width: 39px;
   width: 48px;
   aspect-ratio: 1/1;
   border-radius: 50%;
@@ -47,14 +52,47 @@
   padding: 6px 10px;
   border-radius: 10px;
   transition: background 0.3s, color 0.3s;
-  &.active {
-    background: #e0f7fa; /* Light cyan background */
-    li {
-      color: #00796b; /* Teal text color */
-    }
-  }
+  margin-bottom: 4px;
+  color: rgb(55, 65, 81);
+  fill: rgb(55, 65, 81);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &.active,
   &:hover {
-    background: #b2ebf2; /* Slightly darker cyan for hover */
-    color: #004d40; /* Darker teal for hover */
+    background: rgb(249, 250, 251);
+    color: rgb(79, 70, 229);
+    fill: rgb(79, 70, 229);
+  }
+}
+
+.logout-button-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 20px 0; /* Adjust margin as needed */
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: rgb(79, 70, 229);
+  fill: rgb(79, 70, 229);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  width: calc(100% - 32px); /* Adjust padding and margin */
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+  margin: 0 16px; /* Adjust margin as needed */
+
+  &:hover {
+    background: rgb(249, 250, 251);
+    color: rgb(79, 70, 229);
+    fill: rgb(79, 70, 229);
   }
 }
