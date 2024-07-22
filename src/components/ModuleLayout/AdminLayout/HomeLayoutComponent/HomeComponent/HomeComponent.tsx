@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./HomeComponent.scss";
 import { Link } from "react-router-dom";
 import "./HomeComponent.scss";
@@ -10,6 +10,7 @@ import moment from "moment";
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties";
+import SnackbarComponent from "../../../CommonComponents/Snackbar/SnackbarComponent";
 
 const HomeComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -17,6 +18,24 @@ const HomeComponent = () => {
   MockAPI(axiosInstance);
 
   let [properties, setProperties] = useState<PropertyDetails[]>([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarConfig, setSnackbarConfig] = useState({
+    type: "",
+    content: "",
+    autoHideDuration: 0,
+  });
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const showSnackbar = (boolean: boolean) => {
+    setSnackbarConfig({
+      type: boolean ? "success" : "error",
+      content: boolean ? "Added to Favorites" : "Removed form Favorites",
+      autoHideDuration: 6000,
+    });
+    setSnackbarOpen(true);
+  };
 
   useEffect(() => {
     axiosInstance
@@ -29,25 +48,23 @@ const HomeComponent = () => {
       });
   }, []);
 
-  const toggleFavorite = (index: number) => {
+  const toggleFavorite = (id: string, index: number) => {
     let _properties = [...properties];
     _properties[index].isFavorite = !_properties[index].isFavorite;
     setProperties(_properties);
+    axiosInstance
+      .put(`/properties/${id}`, {
+        isFavorite: _properties[index].isFavorite,
+      })
+      .then((res) => {
+        res.data.property.isFavorite ? showSnackbar(true) : showSnackbar(false);
+        console.log(res);
+        // setProperty(res.data.property);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
-
-  // const filterProperties = useCallback(() => {
-  //   const filteredProperties = propertyDetails.filter(
-  //     (item: PropertyDetails) => {
-  //       return (
-  //         item.name?.toLowerCase()?.includes(searchValue?.toLowerCase()) ||
-  //         item.type?.toLowerCase()?.includes(searchValue?.toLowerCase()) ||
-  //         item.location?.toLowerCase()?.includes(searchValue?.toLowerCase()) ||
-  //         item.furnishing?.toLowerCase()?.includes(searchValue?.toLowerCase())
-  //       );
-  //     }
-  //   );
-  //   setProperties(filteredProperties);
-  // }, [searchValue]);
 
   useEffect(() => {
     axiosInstance
@@ -77,7 +94,7 @@ const HomeComponent = () => {
         <div className="property-card" key={item.id}>
           <button
             className="add-to-fav-btn"
-            onClick={() => toggleFavorite(index)}
+            onClick={() => toggleFavorite(item.id, index)}
           >
             {item.isFavorite ? (
               <FaHeart style={{ color: "red" }} />
@@ -85,6 +102,13 @@ const HomeComponent = () => {
               <FaRegHeart />
             )}
           </button>
+          <SnackbarComponent
+            open={snackbarOpen}
+            onClose={handleSnackbarClose}
+            type={snackbarConfig.type}
+            content={snackbarConfig.content}
+            autoHideDuration={snackbarConfig.autoHideDuration}
+          />
           <Link
             to={`${item.id}`}
             state={{ property: item }}

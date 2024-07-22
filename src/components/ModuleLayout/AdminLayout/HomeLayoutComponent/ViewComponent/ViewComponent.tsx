@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ViewComponent.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
@@ -11,6 +11,7 @@ import CarouselComponent from "../../../../../CommonComponents/Carousel/Carousel
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties";
+import ModalComponent from "../../../CommonComponents/Modal/ModalComponent";
 
 export interface ReviewDetails {
   id: string;
@@ -23,12 +24,81 @@ export interface ReviewDetails {
 
 const ViewComponent = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [btnConfig, setBtnConfig] = useState({
+    isDeleteBtnVisible: false,
+    isSaveBtnVisible: false,
+    isCancelBtnVisible: false,
+    isCloseBtnVisible: false,
+  });
+  const [modalContent, setModalContent] = useState({
+    title: "",
+    body: "",
+  });
   // const { property } = location.state || ({} as PropertyDetails);
   const [property, setProperty] = useState<PropertyDetails>(
     {} as PropertyDetails
   );
   const axiosInstance = axios.create();
   MockAPI(axiosInstance);
+
+  const handleSave = () => {
+    // Handle save action
+    setShowModal(false);
+  };
+
+  const handleDelete = () => {
+    // Handle delete action
+    if (id) {
+      axiosInstance
+        .delete(`/properties/${id}`)
+        .then((res) => {
+          console.log(res);
+          navigate("..");
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const openDeleteModal = () => {
+    setBtnConfig({
+      isDeleteBtnVisible: true,
+      isSaveBtnVisible: false,
+      isCancelBtnVisible: true,
+      isCloseBtnVisible: false,
+    });
+    setModalContent({
+      title: "Delete Confirmation",
+      body: "Are you sure you want to delete this item?",
+    });
+    setShowModal(true);
+  };
+
+  // const openSaveModal = () => {
+  //   setBtnConfig({
+  //     isDeleteBtnVisible: false,
+  //     isSaveBtnVisible: true,
+  //     isCancelBtnVisible: true,
+  //     isCloseBtnVisible: false,
+  //   });
+  //   setModalContent({
+  //     title: "Save Changes",
+  //     body: "Do you want to save the changes you made?",
+  //   });
+  //   setShowModal(true);
+  // };
 
   useEffect(() => {
     if (id) {
@@ -94,8 +164,43 @@ const ViewComponent = () => {
     }
   };
 
+  const editAd = () => {
+    axiosInstance
+      .put(`/properties/${id}`, { isFavorite: true })
+      .then((res) => {
+        console.log(res);
+        setProperty(res.data.property);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <div className="row mx-0 w-100 pt-4 pb-20 px-16 view-wrapper">
+      <div className="col-sm-12 pb-4 d-flex justify-content-end gap-2">
+        <button type="button" className="delete-ad-btn" onClick={editAd}>
+          Edit Ad
+        </button>
+        <button
+          type="button"
+          className="delete-ad-btn"
+          onClick={openDeleteModal}
+        >
+          Delete Ad
+        </button>
+        <ModalComponent
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          title={modalContent.title}
+          content={modalContent.body}
+          btnConfig={btnConfig}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          onCancel={handleCancel}
+          onClose={handleClose}
+        />
+      </div>
       <div className="col-sm-8">
         <div className="left-wrapper">
           <div className="property-image-wrapper">

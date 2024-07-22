@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md";
@@ -8,11 +8,14 @@ import {
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSearch } from "../../../../Redux/Searchbar";
+import { updateSearch } from "../../../../Redux/Searchbar/Searchbar";
+import { updateTabName } from "../../../../Redux/Name/Name";
+import { Popover, Typography } from "@mui/material";
 
 const Header = ({ onDrawerToggle, open }: any) => {
   const [value, setValue] = useState<string>("");
   const searchValue = useSelector((state: any) => state.search.value);
+  const tabName = useSelector((state: any) => state.name.value);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,8 +28,24 @@ const Header = ({ onDrawerToggle, open }: any) => {
 
   const search = () => {
     dispatch(updateSearch(value));
+    dispatch(updateTabName("Buy"));
     navigate("buy");
   };
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+
+  const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openPopover: boolean = Boolean(anchorEl);
+  const id = openPopover ? "simple-popover" : undefined;
 
   return (
     <header className="d-flex justify-between align-items-center">
@@ -39,7 +58,7 @@ const Header = ({ onDrawerToggle, open }: any) => {
           )}
         </button>
 
-        <h2 className="mb-0">Title</h2>
+        <h2 className="mb-0">{tabName}</h2>
       </div>
       <div className="search-bar">
         <div className="relative">
@@ -74,11 +93,27 @@ const Header = ({ onDrawerToggle, open }: any) => {
         </div>
       </div>
       <div className="action-wrapper d-flex align-items-center gap-2">
-        <button className="header-btn">
+        <button
+          className="header-btn"
+          aria-describedby={id}
+          onClick={handlePopoverClick}
+        >
           <span>
             <IoMdNotificationsOutline />
           </span>
         </button>
+        <Popover
+          id={id}
+          open={openPopover}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>No new notifications</Typography>
+        </Popover>
         <button className="header-btn">
           <span>
             <MdOutlineEmail />
