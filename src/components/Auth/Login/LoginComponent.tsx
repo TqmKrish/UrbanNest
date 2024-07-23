@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./LoginComponent.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { moduleName } from "../../../GlobalVariables";
-import Snackbar from "@mui/material/Snackbar";
-import SnackbarComponent from "../../ModuleLayout/CommonComponents/Snackbar/SnackbarComponent";
+import axios from "axios";
+import { MockAPI } from "../../../mockAPI/mockProvider";
 
 interface FormState {
   [key: string]: string;
@@ -12,43 +12,9 @@ interface FormState {
 const LoginComponent: React.FC = () => {
   const [formState, setFormState] = useState<FormState>({});
   const [errors, setErrors] = useState<FormState>({});
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarConfig, setSnackbarConfig] = useState({
-    type: "",
-    content: "",
-    autoHideDuration: 0,
-  });
   const navigate = useNavigate();
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
-  const showSuccessSnackbar = () => {
-    setSnackbarConfig({
-      type: "success",
-      content: "Logged In Successfully",
-      autoHideDuration: 6000,
-    });
-    setSnackbarOpen(true);
-  };
-
-  const showErrorSnackbar = () => {
-    setSnackbarConfig({
-      type: "error",
-      content: "Login Failed",
-      autoHideDuration: 6000,
-    });
-    setSnackbarOpen(true);
-  };
-
-  let userDetails = {
-    name: "Krish Goyal",
-    role: "admin",
-    isLoggedIn: "true",
-    token: "1234567890",
-    tokenExpiryDateTime: new Date(new Date().getTime() + 15 * 60000),
-  };
+  const axiosInstance = axios.create();
+  MockAPI(axiosInstance);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -73,12 +39,26 @@ const LoginComponent: React.FC = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      showErrorSnackbar();
     } else {
       // Handle login logic here
-      showSuccessSnackbar();
-      localStorage.setItem("userDetails", JSON.stringify(userDetails));
-      navigate(`/${moduleName}/${userDetails.role}`);
+      axiosInstance
+        .post("/login", formState)
+        .then((response: any) => {
+          if (response?.data?.isLoginSuccessful) {
+            localStorage.setItem(
+              "userDetails",
+              JSON.stringify(response?.data?.user)
+            );
+            let role: string =
+              response?.data?.user?.role === "admin" ? "admin" : "user";
+            navigate(`/${moduleName}/${role}`);
+          } else {
+            setFormState({});
+          }
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
     }
   };
 
@@ -132,13 +112,6 @@ const LoginComponent: React.FC = () => {
           <button className="my-3 auth-btns" type="submit">
             Login
           </button>
-          <SnackbarComponent
-            open={snackbarOpen}
-            onClose={handleSnackbarClose}
-            type={snackbarConfig.type}
-            content={snackbarConfig.content}
-            autoHideDuration={snackbarConfig.autoHideDuration}
-          />
           <hr />
 
           <button

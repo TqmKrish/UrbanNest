@@ -2,13 +2,27 @@ import image1 from "../../assets/images/2224.jpg";
 import image2 from "../../assets/images/10276.jpg";
 import image3 from "../../assets/images/logo_make_11_06_2023_8.jpg";
 import SellerProfileImage from "../../assets/images/images.jpeg";
+
 export interface SellerDetails {
   id: string;
-  name: string;
-  image: string;
-  phoneNumber: string;
+  fullName: string;
+  username: string;
   email: string;
-  company: string;
+  role: string;
+  propertiesListed: number;
+  contactNumber: string;
+  address: string;
+  profilePicture: string;
+  verified: boolean;
+  rating?: number;
+  lastLogin?: Date;
+  socialLinks?: { [key: string]: string };
+  preferredContactMethod?: string;
+  bio?: string;
+  certifications?: string[];
+  firmName?: string; // Name of the firm the seller is associated with
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PropertyDetails {
@@ -36,6 +50,16 @@ export interface PropertyDetails {
   locationCoordinates: LocationCoordinates;
   isFavorite: boolean;
   sellerDetails: SellerDetails;
+  reviews: ReviewDetails[];
+}
+
+export interface ReviewDetails {
+  id: string;
+  reviewerName: string;
+  dateTime: string;
+  rating: number;
+  description: string;
+  image: string;
 }
 
 interface LocationCoordinates {
@@ -72,13 +96,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.005974,
     },
     sellerDetails: {
-      id: "seller1001",
-      name: "John Doe",
-      image: SellerProfileImage,
-      phoneNumber: "123-456-7890",
-      email: "john.doe@example.com",
-      company: "Doe Realty",
+      id: "seller-1001",
+      fullName: "Alice Johnson",
+      username: "alice_johnson",
+      email: "alice.johnson@realestate.com",
+      role: "Seller",
+      propertiesListed: 15,
+      contactNumber: "+1234567891",
+      address: "456 Oak Avenue, Metropolis, NY, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.7,
+      lastLogin: new Date("2024-07-20T10:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/alicejohnson",
+        facebook: "https://facebook.com/alicejohnson",
+      },
+      preferredContactMethod: "phone",
+      bio: "Experienced agent specializing in residential properties.",
+      certifications: ["Certified Real Estate Agent"],
+      createdAt: new Date("2023-11-01T09:00:00Z"),
+      updatedAt: new Date("2024-07-22T09:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1002000200020002",
@@ -108,13 +185,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.935242,
     },
     sellerDetails: {
-      id: "seller1002",
-      name: "Jane Smith",
-      image: SellerProfileImage,
-      phoneNumber: "987-654-3210",
-      email: "jane.smith@example.com",
-      company: "Smith Realty",
+      id: "seller-2004",
+      fullName: "Sophia Wilson",
+      username: "sophia_wilson",
+      email: "sophia.wilson@realestate.com",
+      role: "Seller",
+      propertiesListed: 7,
+      contactNumber: "+1234567804",
+      address: "303 Oak Drive, Grandview, CO, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.8,
+      lastLogin: new Date("2024-07-19T15:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/sophiawilson",
+      },
+      preferredContactMethod: "phone",
+      bio: "Specializing in eco-friendly and sustainable properties.",
+      certifications: ["Eco-Friendly Property Specialist"],
+      firmName: "Wilson & Co.",
+      createdAt: new Date("2023-11-20T13:00:00Z"),
+      updatedAt: new Date("2024-07-22T12:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1003000330030003",
@@ -145,13 +275,67 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.985428,
     },
     sellerDetails: {
-      id: "seller1003",
-      name: "Alice Johnson",
-      image: SellerProfileImage,
-      phoneNumber: "555-123-4567",
-      email: "alice.johnson@example.com",
-      company: "Johnson Realty",
+      id: "seller-2005",
+      fullName: "Oliver Adams",
+      username: "oliver_adams",
+      email: "oliver.adams@realestate.com",
+      role: "Seller",
+      propertiesListed: 11,
+      contactNumber: "+1234567805",
+      address: "404 Birch Lane, Uptown, WA, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.5,
+      lastLogin: new Date("2024-07-20T16:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/oliveradams",
+        facebook: "https://facebook.com/oliveradams",
+      },
+      preferredContactMethod: "email",
+      bio: "Expert in commercial and retail real estate.",
+      certifications: ["Commercial Property Specialist"],
+      firmName: "Adams Realty",
+      createdAt: new Date("2024-02-10T14:00:00Z"),
+      updatedAt: new Date("2024-07-22T13:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1004000400040004",
@@ -182,13 +366,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.984016,
     },
     sellerDetails: {
-      id: "seller1004",
-      name: "Bob Brown",
-      image: SellerProfileImage,
-      phoneNumber: "111-222-3333",
-      email: "bob.brown@example.com",
-      company: "Brown Realty",
+      id: "seller-2006",
+      fullName: "Emily Brown",
+      username: "emily_brown",
+      email: "emily.brown@realestate.com",
+      role: "Seller",
+      propertiesListed: 13,
+      contactNumber: "+1234567806",
+      address: "505 Cedar Street, Downtown, OR, USA",
+      profilePicture: SellerProfileImage,
+      verified: false,
+      rating: 4.3,
+      lastLogin: new Date("2024-07-21T12:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/emilybrown",
+      },
+      preferredContactMethod: "phone",
+      bio: "Focused on residential and investment properties.",
+      certifications: ["Investment Property Specialist"],
+      firmName: "Brown Realty Group",
+      createdAt: new Date("2024-04-05T09:00:00Z"),
+      updatedAt: new Date("2024-07-22T14:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1003000500050005",
@@ -219,13 +456,67 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.151535,
     },
     sellerDetails: {
-      id: "seller1005",
-      name: "Charlie Davis",
-      image: SellerProfileImage,
-      phoneNumber: "444-555-6666",
-      email: "charlie.davis@example.com",
-      company: "Davis Realty",
+      id: "seller-2001",
+      fullName: "Michael Green",
+      username: "michael_green",
+      email: "michael.green@realestate.com",
+      role: "Seller",
+      propertiesListed: 22,
+      contactNumber: "+1234567801",
+      address: "909 Summit Avenue, New City, CA, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.6,
+      lastLogin: new Date("2024-07-20T09:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/michaelgreen",
+        facebook: "https://facebook.com/michaelgreen",
+      },
+      preferredContactMethod: "phone",
+      bio: "Experienced in high-end residential properties.",
+      certifications: ["Luxury Property Specialist"],
+      firmName: "Green Realty",
+      createdAt: new Date("2023-12-01T10:00:00Z"),
+      updatedAt: new Date("2024-07-22T09:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1006000600060006",
@@ -256,13 +547,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.011276,
     },
     sellerDetails: {
-      id: "seller1006",
-      name: "Emily Evans",
-      image: SellerProfileImage,
-      phoneNumber: "777-888-9999",
-      email: "emily.evans@example.com",
-      company: "Evans Realty",
+      id: "seller-2002",
+      fullName: "Linda Scott",
+      username: "linda_scott",
+      email: "linda.scott@realestate.com",
+      role: "Seller",
+      propertiesListed: 14,
+      contactNumber: "+1234567802",
+      address: "1010 Coral Lane, Beachside, FL, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.7,
+      lastLogin: new Date("2024-07-19T10:30:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/lindascott",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializes in beachfront and vacation properties.",
+      certifications: ["Vacation Property Specialist"],
+      firmName: "Scott Realty Group",
+      createdAt: new Date("2024-01-05T12:00:00Z"),
+      updatedAt: new Date("2024-07-22T10:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1001000100010001",
@@ -292,13 +636,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.005974,
     },
     sellerDetails: {
-      id: "seller1001",
-      name: "John Doe",
-      image: SellerProfileImage,
-      phoneNumber: "123-456-7890",
-      email: "john.doe@example.com",
-      company: "Doe Realty",
+      id: "seller-2003",
+      fullName: "James Harris",
+      username: "james_harris",
+      email: "james.harris@realestate.com",
+      role: "Seller",
+      propertiesListed: 9,
+      contactNumber: "+1234567803",
+      address: "2020 Maple Street, Metroville, TX, USA",
+      profilePicture: SellerProfileImage,
+      verified: false,
+      rating: 4.4,
+      lastLogin: new Date("2024-07-18T14:00:00Z"),
+      socialLinks: {
+        facebook: "https://facebook.com/jamesharris",
+      },
+      preferredContactMethod: "email",
+      bio: "Focused on residential and multi-family properties.",
+      certifications: ["Residential Property Specialist"],
+      firmName: "Harris Homes",
+      createdAt: new Date("2024-03-15T11:00:00Z"),
+      updatedAt: new Date("2024-07-22T11:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "2002000200020002",
@@ -328,13 +725,67 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.935242,
     },
     sellerDetails: {
-      id: "seller1002",
-      name: "Jane Smith",
-      image: SellerProfileImage,
-      phoneNumber: "987-654-3210",
-      email: "jane.smith@example.com",
-      company: "Smith Realty",
+      id: "seller-2007",
+      fullName: "Aiden Clark",
+      username: "aiden_clark",
+      email: "aiden.clark@realestate.com",
+      role: "Seller",
+      propertiesListed: 16,
+      contactNumber: "+1234567807",
+      address: "606 Elm Street, Eastside, NV, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.9,
+      lastLogin: new Date("2024-07-22T09:00:00Z"),
+      socialLinks: {
+        facebook: "https://facebook.com/aidenclark",
+        linkedin: "https://linkedin.com/in/aidenclark",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializing in high-end and luxury properties.",
+      certifications: ["Luxury Property Specialist"],
+      firmName: "Clark Real Estate",
+      createdAt: new Date("2024-03-15T10:00:00Z"),
+      updatedAt: new Date("2024-07-22T15:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1003000300030003",
@@ -365,13 +816,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.985428,
     },
     sellerDetails: {
-      id: "seller1003",
-      name: "Alice Johnson",
-      image: SellerProfileImage,
-      phoneNumber: "555-123-4567",
-      email: "alice.johnson@example.com",
-      company: "Johnson Realty",
+      id: "seller-2008",
+      fullName: "Mia Lewis",
+      username: "mia_lewis",
+      email: "mia.lewis@realestate.com",
+      role: "Seller",
+      propertiesListed: 9,
+      contactNumber: "+1234567808",
+      address: "707 Pine Street, Hillcrest, PA, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.4,
+      lastLogin: new Date("2024-07-19T17:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/mialewis",
+      },
+      preferredContactMethod: "phone",
+      bio: "Experienced in both residential and commercial properties.",
+      certifications: ["Residential Property Specialist"],
+      firmName: "Lewis Realty",
+      createdAt: new Date("2024-01-20T11:00:00Z"),
+      updatedAt: new Date("2024-07-22T16:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1004000400040056",
@@ -402,13 +906,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.984016,
     },
     sellerDetails: {
-      id: "seller1004",
-      name: "Bob Brown",
-      image: SellerProfileImage,
-      phoneNumber: "111-222-3333",
-      email: "bob.brown@example.com",
-      company: "Brown Realty",
+      id: "seller-2009",
+      fullName: "Noah Martin",
+      username: "noah_martin",
+      email: "noah.martin@realestate.com",
+      role: "Seller",
+      propertiesListed: 5,
+      contactNumber: "+1234567809",
+      address: "808 Birch Lane, Downtown, TX, USA",
+      profilePicture: SellerProfileImage,
+      verified: false,
+      rating: 4.2,
+      lastLogin: new Date("2024-07-18T13:30:00Z"),
+      socialLinks: {
+        facebook: "https://facebook.com/noahmartin",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializes in first-time homebuyers and new developments.",
+      certifications: ["New Development Specialist"],
+      firmName: "Martin Realty",
+      createdAt: new Date("2024-02-10T08:00:00Z"),
+      updatedAt: new Date("2024-07-22T17:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1005000500050005",
@@ -439,13 +996,67 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.151535,
     },
     sellerDetails: {
-      id: "seller1005",
-      name: "Charlie Davis",
-      image: SellerProfileImage,
-      phoneNumber: "444-555-6666",
-      email: "charlie.davis@example.com",
-      company: "Davis Realty",
+      id: "seller-2010",
+      fullName: "Olivia Turner",
+      username: "olivia_turner",
+      email: "olivia.turner@realestate.com",
+      role: "Seller",
+      propertiesListed: 17,
+      contactNumber: "+1234567810",
+      address: "909 Walnut Street, Lakeside, MI, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.7,
+      lastLogin: new Date("2024-07-21T11:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/oliviaturner",
+        facebook: "https://facebook.com/oliviaturner",
+      },
+      preferredContactMethod: "phone",
+      bio: "Expert in luxury estates and high-value properties.",
+      certifications: ["Luxury Property Specialist"],
+      firmName: "Turner Realty",
+      createdAt: new Date("2024-03-25T12:00:00Z"),
+      updatedAt: new Date("2024-07-22T18:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1006000600090006",
@@ -476,13 +1087,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -74.011276,
     },
     sellerDetails: {
-      id: "seller1006",
-      name: "Emily Evans",
-      image: SellerProfileImage,
-      phoneNumber: "777-888-9999",
-      email: "emily.evans@example.com",
-      company: "Evans Realty",
+      id: "seller-2014",
+      fullName: "Ava Johnson",
+      username: "ava_johnson",
+      email: "ava.johnson@realestate.com",
+      role: "Seller",
+      propertiesListed: 11,
+      contactNumber: "+1234567814",
+      address: "4000 Willow Street, Greenfield, IL, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.5,
+      lastLogin: new Date("2024-07-22T08:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/avajohnson",
+      },
+      preferredContactMethod: "phone",
+      bio: "Focused on residential homes and suburban properties.",
+      certifications: ["Residential Property Specialist"],
+      firmName: "Johnson Realty",
+      createdAt: new Date("2024-02-20T09:00:00Z"),
+      updatedAt: new Date("2024-07-22T22:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1007000700070007",
@@ -512,13 +1176,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.992298,
     },
     sellerDetails: {
-      id: "seller1007",
-      name: "David Clark",
-      image: SellerProfileImage,
-      phoneNumber: "999-555-4444",
-      email: "david.clark@example.com",
-      company: "Clark Realty",
+      id: "seller-2013",
+      fullName: "Liam Roberts",
+      username: "liam_roberts",
+      email: "liam.roberts@realestate.com",
+      role: "Seller",
+      propertiesListed: 6,
+      contactNumber: "+1234567813",
+      address: "3000 Cedar Lane, Westfield, VA, USA",
+      profilePicture: SellerProfileImage,
+      verified: false,
+      rating: 4.2,
+      lastLogin: new Date("2024-07-20T16:30:00Z"),
+      socialLinks: {
+        facebook: "https://facebook.com/liamroberts",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializes in investment and rental properties.",
+      certifications: ["Rental Property Specialist"],
+      firmName: "Roberts Realty",
+      createdAt: new Date("2024-07-01T10:00:00Z"),
+      updatedAt: new Date("2024-07-22T21:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1008000800080008",
@@ -548,13 +1265,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.965974,
     },
     sellerDetails: {
-      id: "seller1008",
-      name: "Susan Lee",
-      image: SellerProfileImage,
-      phoneNumber: "123-555-7890",
-      email: "susan.lee@example.com",
-      company: "Lee Realty",
+      id: "seller-2012",
+      fullName: "Emma Clark",
+      username: "emma_clark",
+      email: "emma.clark@realestate.com",
+      role: "Seller",
+      propertiesListed: 10,
+      contactNumber: "+1234567812",
+      address: "2000 Pine Avenue, Northside, WA, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.8,
+      lastLogin: new Date("2024-07-21T14:00:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/emmaclark",
+      },
+      preferredContactMethod: "phone",
+      bio: "Experienced in luxury apartments and urban properties.",
+      certifications: ["Urban Property Specialist"],
+      firmName: "Clark & Associates",
+      createdAt: new Date("2024-06-15T11:00:00Z"),
+      updatedAt: new Date("2024-07-22T20:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1009000900090009",
@@ -584,13 +1354,66 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.975974,
     },
     sellerDetails: {
-      id: "seller1009",
-      name: "Mike Johnson",
-      image: SellerProfileImage,
-      phoneNumber: "321-456-7890",
-      email: "mike.johnson@example.com",
-      company: "Johnson Realty",
+      id: "seller-2011",
+      fullName: "James Walker",
+      username: "james_walker",
+      email: "james.walker@realestate.com",
+      role: "Seller",
+      propertiesListed: 8,
+      contactNumber: "+1234567811",
+      address: "1000 Elm Street, Rivertown, KY, USA",
+      profilePicture: SellerProfileImage,
+      verified: true,
+      rating: 4.6,
+      lastLogin: new Date("2024-07-22T10:30:00Z"),
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/jameswalker",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializing in rural and agricultural properties.",
+      certifications: ["Agricultural Property Specialist"],
+      firmName: "Walker Real Estate",
+      createdAt: new Date("2024-05-01T09:00:00Z"),
+      updatedAt: new Date("2024-07-22T19:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
   {
     id: "1010001000100010",
@@ -620,12 +1443,65 @@ export const propertyDetails: PropertyDetails[] = [
       longitude: -73.995974,
     },
     sellerDetails: {
-      id: "seller1010",
-      name: "Linda White",
-      image: SellerProfileImage,
-      phoneNumber: "123-999-7890",
-      email: "linda.white@example.com",
-      company: "White Realty",
+      id: "seller-2013",
+      fullName: "Liam Roberts",
+      username: "liam_roberts",
+      email: "liam.roberts@realestate.com",
+      role: "Seller",
+      propertiesListed: 6,
+      contactNumber: "+1234567813",
+      address: "3000 Cedar Lane, Westfield, VA, USA",
+      profilePicture: SellerProfileImage,
+      verified: false,
+      rating: 4.2,
+      lastLogin: new Date("2024-07-20T16:30:00Z"),
+      socialLinks: {
+        facebook: "https://facebook.com/liamroberts",
+      },
+      preferredContactMethod: "email",
+      bio: "Specializes in investment and rental properties.",
+      certifications: ["Rental Property Specialist"],
+      firmName: "Roberts Realty",
+      createdAt: new Date("2024-07-01T10:00:00Z"),
+      updatedAt: new Date("2024-07-22T21:00:00Z"),
     },
+    reviews: [
+      {
+        id: "review1001",
+        reviewerName: "Alice Williams",
+        dateTime: "2024-07-10T14:30:00",
+        rating: 4.5,
+        description:
+          "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1002",
+        reviewerName: "Bob Johnson",
+        dateTime: "2024-07-12T09:45:00",
+        rating: 4.0,
+        description:
+          "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1003",
+        reviewerName: "Charlie Davis",
+        dateTime: "2024-07-14T18:15:00",
+        rating: 3.5,
+        description:
+          "Good location and decent facilities. However, some maintenance work is needed.",
+        image: "https://via.placeholder.com/100x100",
+      },
+      {
+        id: "review1004",
+        reviewerName: "Dana Lee",
+        dateTime: "2024-07-16T13:00:00",
+        rating: 5.0,
+        description:
+          "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
+        image: "https://via.placeholder.com/100x100",
+      },
+    ],
   },
 ];

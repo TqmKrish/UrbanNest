@@ -1,5 +1,8 @@
 import { PropertyDetails, propertyDetails } from "../DB/Properties";
 import { v4 as uuidv4 } from "uuid";
+import image1 from "../../assets/images/2224.jpg";
+import image2 from "../../assets/images/10276.jpg";
+import image3 from "../../assets/images/logo_make_11_06_2023_8.jpg";
 
 export const getProperty = (id: string) => {
   return propertyDetails.filter((item: PropertyDetails) => item.id === id)[0];
@@ -20,8 +23,9 @@ export const getFilteredProperties = (param: string) => {
   });
 };
 
-export const addProperty = (newProperty: PropertyDetails) => {
+export const addProperty = (newProperty: any) => {
   newProperty.id = uuidv4(); // Assign a new unique ID to the property
+  newProperty.images = [image1, image2, image3];
   propertyDetails.push(newProperty);
   return newProperty;
 };
@@ -49,4 +53,8 @@ export const updateProperty = (
     return property;
   }
   return null;
+};
+
+export const updateReview = (propertyId: string, review: any) => {
+  return review;
 };

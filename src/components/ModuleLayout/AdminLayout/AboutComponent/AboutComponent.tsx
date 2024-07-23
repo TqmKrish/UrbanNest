@@ -1,233 +1,280 @@
-import React, { useState, ChangeEvent, useRef } from "react";
-import "./AboutComponent.scss";
+import React, { useState } from "react";
+import axios from "axios";
+import { MockAPI } from "../../../../mockAPI/mockProvider";
+import { useNavigate } from "react-router-dom";
 
-interface FormData {
+interface PropertyFormValues {
+  name: string;
   title: string;
   description: string;
-  price: string;
-  bedrooms: string;
-  bathrooms: string;
-  location: string;
   type: string;
-  facilities: string;
+  bedrooms: number;
+  bathrooms: number;
+  furnishing: string;
+  constructionStatus: string;
+  listedBy: string;
+  superBuiltUpArea: number;
+  carpetArea: number;
+  totalFloors: number;
+  floorNo: number;
+  carParking: number;
+  facing: string;
+  projectName: string;
+  price: number;
+  location: string;
   images: File[];
 }
 
+const initialFormValues: PropertyFormValues = {
+  name: "",
+  title: "",
+  description: "",
+  type: "",
+  bedrooms: 0,
+  bathrooms: 0,
+  furnishing: "",
+  constructionStatus: "",
+  listedBy: "",
+  superBuiltUpArea: 0,
+  carpetArea: 0,
+  totalFloors: 0,
+  floorNo: 0,
+  carParking: 0,
+  facing: "",
+  projectName: "",
+  price: 0,
+  location: "",
+  images: [],
+};
+
 const AboutComponent: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    title: "",
-    description: "",
-    price: "",
-    bedrooms: "",
-    bathrooms: "",
-    location: "",
-    type: "",
-    facilities: "",
-    images: [],
-  });
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files);
-      setFormData({ ...formData, images: filesArray });
-
-      const previewArray = filesArray.map((file) => URL.createObjectURL(file));
-      setPreviewImages(previewArray);
-    }
-  };
+  const [formValues, setFormValues] =
+    useState<PropertyFormValues>(initialFormValues);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [errors, setErrors] = useState<{
+    [key in keyof PropertyFormValues]?: string;
+  }>({});
+  const axiosInstance = axios.create();
+  MockAPI(axiosInstance);
+  const navigate = useNavigate();
 
   const validate = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!formData.title) newErrors.title = "Title is required";
-    if (!formData.description)
-      newErrors.description = "Description is required";
-    if (!formData.price || isNaN(Number(formData.price)))
-      newErrors.price = "Valid price is required";
-    if (!formData.bedrooms || isNaN(Number(formData.bedrooms)))
-      newErrors.bedrooms = "Valid number of bedrooms is required";
-    if (!formData.bathrooms || isNaN(Number(formData.bathrooms)))
-      newErrors.bathrooms = "Valid number of bathrooms is required";
-    if (!formData.location) newErrors.location = "Location is required";
-    if (!formData.type) newErrors.type = "Type is required";
-    if (!formData.facilities) newErrors.facilities = "Facilities are required";
-    return newErrors;
+    const newErrors: { [key in keyof PropertyFormValues]?: string } = {};
+    Object.keys(formValues).forEach((key) => {
+      if (key !== "images" && !formValues[key as keyof PropertyFormValues]) {
+        newErrors[key as keyof PropertyFormValues] = "Required";
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]:
+        name === "bedrooms" ||
+        name === "bathrooms" ||
+        name === "superBuiltUpArea" ||
+        name === "carpetArea" ||
+        name === "totalFloors" ||
+        name === "floorNo" ||
+        name === "carParking" ||
+        name === "price"
+          ? Number(value)
+          : value,
+    }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      images: files,
+    }));
+    setUploadedImages(files.map((file) => URL.createObjectURL(file)));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      // Handle form submission
-      console.log("Form Data:", formData);
+    if (!validate()) return;
+
+    try {
+      const formData = new FormData();
+      Object.keys(formValues).forEach((key) => {
+        if (key === "images") {
+          formValues.images.forEach((file, index) => {
+            formData.append(`images[${index}]`, file);
+          });
+        } else {
+          formData.append(key, (formValues as any)[key]);
+        }
+      });
+      const response = await axiosInstance.post("/properties", formData);
+      console.log(response.data);
+      navigate("../buy");
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <div className="sell-property-form-container">
-      <div className="sell-property-form">
-        <h2>Sell Your Property</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {[
+          { name: "name", label: "Name", placeholder: "Enter name" },
+          { name: "title", label: "Title", placeholder: "Enter title" },
+          { name: "type", label: "Type", placeholder: "Enter property type" },
+          {
+            name: "bedrooms",
+            label: "Bedrooms",
+            placeholder: "Number of bedrooms",
+          },
+          {
+            name: "bathrooms",
+            label: "Bathrooms",
+            placeholder: "Number of bathrooms",
+          },
+          {
+            name: "furnishing",
+            label: "Furnishing",
+            placeholder: "Enter furnishing details",
+          },
+          {
+            name: "constructionStatus",
+            label: "Construction Status",
+            placeholder: "Enter construction status",
+          },
+          {
+            name: "listedBy",
+            label: "Listed By",
+            placeholder: "Enter name of the lister",
+          },
+          {
+            name: "superBuiltUpArea",
+            label: "Super Built-Up Area",
+            placeholder: "Enter super built-up area",
+          },
+          {
+            name: "carpetArea",
+            label: "Carpet Area",
+            placeholder: "Enter carpet area",
+          },
+          {
+            name: "totalFloors",
+            label: "Total Floors",
+            placeholder: "Enter total number of floors",
+          },
+          {
+            name: "floorNo",
+            label: "Floor No",
+            placeholder: "Enter floor number",
+          },
+          {
+            name: "carParking",
+            label: "Car Parking",
+            placeholder: "Enter car parking details",
+          },
+          {
+            name: "facing",
+            label: "Facing",
+            placeholder: "Enter facing direction",
+          },
+          {
+            name: "projectName",
+            label: "Project Name",
+            placeholder: "Enter project name",
+          },
+          { name: "price", label: "Price", placeholder: "Enter price" },
+          {
+            name: "location",
+            label: "Location",
+            placeholder: "Enter location",
+          },
+          {
+            name: "description",
+            label: "Description",
+            placeholder: "Enter description",
+          },
+        ].map((field, index) => (
+          <div key={index} className="flex flex-col">
+            <label htmlFor={field.name} className="font-medium text-gray-700">
+              {field.label}
+            </label>
+            {field.name !== "description" ? (
               <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
+                id={field.name}
+                name={field.name}
+                type={
+                  field.name === "bedrooms" ||
+                  field.name === "bathrooms" ||
+                  field.name === "superBuiltUpArea" ||
+                  field.name === "carpetArea" ||
+                  field.name === "totalFloors" ||
+                  field.name === "floorNo" ||
+                  field.name === "carParking" ||
+                  field.name === "price"
+                    ? "number"
+                    : "text"
+                }
+                value={(formValues as any)[field.name]}
                 onChange={handleChange}
+                placeholder={field.placeholder}
+                className="mt-1 p-2 border border-gray-300 rounded-md"
               />
-              {errors.title && <p className="error-message">{errors.title}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="price">Price</label>
-              <input
-                type="text"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-              />
-              {errors.price && <p className="error-message">{errors.price}</p>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="bedrooms">Bedrooms</label>
-              <input
-                type="text"
-                id="bedrooms"
-                name="bedrooms"
-                value={formData.bedrooms}
-                onChange={handleChange}
-              />
-              {errors.bedrooms && (
-                <p className="error-message">{errors.bedrooms}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="bathrooms">Bathrooms</label>
-              <input
-                type="text"
-                id="bathrooms"
-                name="bathrooms"
-                value={formData.bathrooms}
-                onChange={handleChange}
-              />
-              {errors.bathrooms && (
-                <p className="error-message">{errors.bathrooms}</p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="location">Location</label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-              />
-              {errors.location && (
-                <p className="error-message">{errors.location}</p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="type">Type</label>
-              <select
-                id="type"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-              >
-                <option value="">Select type</option>
-                <option value="house">House</option>
-                <option value="apartment">Apartment</option>
-                <option value="condo">Condo</option>
-              </select>
-              {errors.type && <p className="error-message">{errors.type}</p>}
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
+            ) : (
               <textarea
-                id="description"
-                name="description"
-                value={formData.description}
+                id={field.name}
+                name={field.name}
+                rows={5}
+                value={(formValues as any)[field.name]}
                 onChange={handleChange}
-              />
-              {errors.description && (
-                <p className="error-message">{errors.description}</p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="facilities">Facilities</label>
-              <textarea
-                id="facilities"
-                name="facilities"
-                value={formData.facilities}
-                onChange={handleChange}
-              />
-              {errors.facilities && (
-                <p className="error-message">{errors.facilities}</p>
-              )}
-            </div>
+                placeholder={field.placeholder}
+                className="mt-1 p-2 border border-gray-300 rounded-md"
+              ></textarea>
+            )}
+            {errors[field.name as keyof PropertyFormValues] && (
+              <span className="text-red-600 text-sm">
+                {errors[field.name as keyof PropertyFormValues]}
+              </span>
+            )}
           </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="images">Upload Images</label>
-              <input
-                type="file"
-                id="images"
-                name="images"
-                multiple
-                className="image-upload"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-              />
-              <label htmlFor="images" className="image-upload-label">
-                Select Images
-              </label>
-            </div>
-
-            <div className="image-preview-container">
-              {previewImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`preview ${index}`}
-                  className="image-preview"
-                />
-              ))}
-            </div>
-          </div>
-
-          <button type="submit" className="submit-button">
-            Submit
-          </button>
-        </form>
+        ))}
       </div>
-    </div>
+      <div>
+        <label className="font-medium text-gray-700">Upload Images</label>
+        <input
+          type="file"
+          multiple
+          onChange={handleImageChange}
+          className="mt-1 p-2 border border-gray-300 rounded-md"
+          required
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+        {uploadedImages.map((image, index) => (
+          <div key={index} className="relative">
+            <img
+              src={image}
+              alt={`Uploaded ${index + 1}`}
+              className="object-cover w-full h-40 rounded-md"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="d-flex">
+        <button
+          type="submit"
+          className="w-25 py-2 px-4 text-white font-semibold rounded-md m-auto"
+          style={{ background: "rgb(79, 70, 229)" }}
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   );
 };
 

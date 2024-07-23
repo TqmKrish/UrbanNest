@@ -10,7 +10,6 @@ import moment from "moment";
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties";
-import SnackbarComponent from "../../../CommonComponents/Snackbar/SnackbarComponent";
 
 const HomeComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -18,24 +17,6 @@ const HomeComponent = () => {
   MockAPI(axiosInstance);
 
   let [properties, setProperties] = useState<PropertyDetails[]>([]);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarConfig, setSnackbarConfig] = useState({
-    type: "",
-    content: "",
-    autoHideDuration: 0,
-  });
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
-  const showSnackbar = (boolean: boolean) => {
-    setSnackbarConfig({
-      type: boolean ? "success" : "error",
-      content: boolean ? "Added to Favorites" : "Removed form Favorites",
-      autoHideDuration: 6000,
-    });
-    setSnackbarOpen(true);
-  };
 
   useEffect(() => {
     axiosInstance
@@ -57,7 +38,6 @@ const HomeComponent = () => {
         isFavorite: _properties[index].isFavorite,
       })
       .then((res) => {
-        res.data.property.isFavorite ? showSnackbar(true) : showSnackbar(false);
         console.log(res);
         // setProperty(res.data.property);
       })
@@ -102,13 +82,6 @@ const HomeComponent = () => {
               <FaRegHeart />
             )}
           </button>
-          <SnackbarComponent
-            open={snackbarOpen}
-            onClose={handleSnackbarClose}
-            type={snackbarConfig.type}
-            content={snackbarConfig.content}
-            autoHideDuration={snackbarConfig.autoHideDuration}
-          />
           <Link
             to={`${item.id}`}
             state={{ property: item }}

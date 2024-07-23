@@ -18,6 +18,7 @@ const Header = ({ onDrawerToggle, open }: any) => {
   const tabName = useSelector((state: any) => state.name.value);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userDetails = JSON.parse(localStorage.getItem("userDetails") ?? "{}");
 
   const updateValue = (event: any) => {
     setValue(event?.target.value);
@@ -128,8 +129,8 @@ const Header = ({ onDrawerToggle, open }: any) => {
             />
           </span>
           <ul className="px-0 mb-0">
-            <li>User Name</li>
-            <li>Super Admin</li>
+            <li>{userDetails?.fullName}</li>
+            <li>{userDetails.role}</li>
           </ul>
         </div>
       </div>

@@ -10,17 +10,11 @@ import moment from "moment";
 import CarouselComponent from "../../../../../CommonComponents/Carousel/Carousel";
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
-import { PropertyDetails } from "../../../../../mockAPI/DB/Properties";
+import {
+  PropertyDetails,
+  ReviewDetails,
+} from "../../../../../mockAPI/DB/Properties";
 import ModalComponent from "../../../CommonComponents/Modal/ModalComponent";
-
-export interface ReviewDetails {
-  id: string;
-  reviewerName: string;
-  dateTime: string;
-  rating: number;
-  description: string;
-  image: string;
-}
 
 const ViewComponent = () => {
   const { id } = useParams();
@@ -113,45 +107,6 @@ const ViewComponent = () => {
         });
     }
   }, []);
-
-  const reviews: ReviewDetails[] = [
-    {
-      id: "review1001",
-      reviewerName: "Alice Williams",
-      dateTime: "2024-07-10T14:30:00",
-      rating: 4.5,
-      description:
-        "Great property with modern amenities. The neighborhood is quiet and well-connected to the city.",
-      image: "https://via.placeholder.com/100x100",
-    },
-    {
-      id: "review1002",
-      reviewerName: "Bob Johnson",
-      dateTime: "2024-07-12T09:45:00",
-      rating: 4.0,
-      description:
-        "Spacious apartment with a beautiful view. The interior design is elegant and contemporary.",
-      image: "https://via.placeholder.com/100x100",
-    },
-    {
-      id: "review1003",
-      reviewerName: "Charlie Davis",
-      dateTime: "2024-07-14T18:15:00",
-      rating: 3.5,
-      description:
-        "Good location and decent facilities. However, some maintenance work is needed.",
-      image: "https://via.placeholder.com/100x100",
-    },
-    {
-      id: "review1004",
-      reviewerName: "Dana Lee",
-      dateTime: "2024-07-16T13:00:00",
-      rating: 5.0,
-      description:
-        "Excellent property with luxurious amenities. The surroundings are serene and the view is breathtaking.",
-      image: "https://via.placeholder.com/100x100",
-    },
-  ];
 
   const formatDate = (dateString: string) => {
     const date = moment(dateString);
@@ -256,8 +211,19 @@ const ViewComponent = () => {
           </div>
           <div className=" d-flex w-100 flex-column reviews-wrapper card-details bg-white">
             <h3>Reviews</h3>
+            <div className="d-flex align-items-center justify-start">
+              <label htmlFor="review" className="w-100">
+                Add a Review
+              </label>
+              <input
+                name="review"
+                placeholder="Add a review"
+                type="text"
+                className="w-100"
+              />
+            </div>
             <div className="reviews-container">
-              {reviews?.map((review: ReviewDetails) => (
+              {property?.reviews?.map((review: ReviewDetails) => (
                 <div className="review-card" key={review?.id}>
                   <div className="review-header">
                     <img
@@ -327,10 +293,10 @@ const ViewComponent = () => {
             <div className="d-flex align-items-center gap-3">
               <img
                 className="seller-profile-pic"
-                src={property?.sellerDetails?.image}
+                src={property?.sellerDetails?.profilePicture}
                 alt="profile-pic-seller"
               />
-              <h3 className="mb-0">{property?.sellerDetails?.name}</h3>
+              <h3 className="mb-0">{property?.sellerDetails?.fullName}</h3>
               <FaChevronRight className="ms-auto" />
             </div>
             <button type="button" className="btn chat-with-seller-btn">
