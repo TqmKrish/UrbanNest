@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./BuyComponent.scss";
-import { useSelector } from "react-redux";
+import "./RentComponent.scss";
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/PropertiesForBuy";
 import PropertyCard from "../../../../CommonComponents/PropertyCard/PropertyCard";
 
-const BuyComponent = () => {
-  const searchValue = useSelector((state: any) => state.search.value);
+const RentComponent = () => {
   const axiosInstance = axios.create();
   MockAPI(axiosInstance);
 
@@ -15,7 +13,7 @@ const BuyComponent = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/getAllProperties/buy")
+      .get("/getAllProperties/rent")
       .then((res: any) => {
         setProperties(res.data.properties);
       })
@@ -24,23 +22,23 @@ const BuyComponent = () => {
       });
   }, []);
 
-  useEffect(() => {
-    axiosInstance
-      .get(`/filterProperties/${searchValue}`)
-      .then((res: any) => {
-        setProperties(res.data.properties);
-      })
-      .catch((error: any) => {
-        console.log("error", error);
-      });
-  }, [searchValue]);
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get(`/filterProperties/${searchValue}`)
+  //     .then((res: any) => {
+  //       setProperties(res.data.properties);
+  //     })
+  //     .catch((error: any) => {
+  //       console.log("error", error);
+  //     });
+  // }, [searchValue]);
 
   const handleToggleFavorite = (id: string, index: number) => {
     let _properties = [...properties];
     _properties[index].isFavorite = !_properties[index].isFavorite;
     setProperties(_properties);
     axiosInstance
-      .put(`/properties/buy/${id}`, {
+      .put(`/properties/rent/${id}`, {
         isFavorite: _properties[index].isFavorite,
       })
       .then((res) => {
@@ -66,4 +64,4 @@ const BuyComponent = () => {
   );
 };
 
-export default BuyComponent;
+export default RentComponent;

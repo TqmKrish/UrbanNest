@@ -67,7 +67,7 @@ interface LocationCoordinates {
   longitude: number;
 }
 
-export const propertyDetails: PropertyDetails[] = [
+export const propertiesForBuy: PropertyDetails[] = [
   {
     id: "1001000100010088",
     name: "Sunny Apartment",

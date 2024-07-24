@@ -7,16 +7,20 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoCallOutline } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa6";
 import moment from "moment";
-import CarouselComponent from "../../../../CommonComponents/Carousel/Carousel";
+import CarouselComponent from "../../../CommonComponents/Carousel/Carousel";
 import axios from "axios";
-import { MockAPI } from "../../../../../mockAPI/mockProvider";
+import { MockAPI } from "../../../../mockAPI/mockProvider";
 import {
   PropertyDetails,
   ReviewDetails,
-} from "../../../../../mockAPI/DB/Properties";
-import ModalComponent from "../../../CommonComponents/Modal/ModalComponent";
+} from "../../../../mockAPI/DB/PropertiesForBuy";
+import ModalComponent from "../Modal/ModalComponent";
 
-const ViewComponent = () => {
+interface params {
+  propertyType: string;
+}
+
+const ViewComponent: React.FC<params> = ({ propertyType }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +50,7 @@ const ViewComponent = () => {
     // Handle delete action
     if (id) {
       axiosInstance
-        .delete(`/properties/${id}`)
+        .delete(`/properties/${propertyType}/${id}`)
         .then((res) => {
           console.log(res);
           navigate("..");
@@ -95,9 +99,10 @@ const ViewComponent = () => {
   // };
 
   useEffect(() => {
+    console.log(propertyType);
     if (id) {
       axiosInstance
-        .get(`/properties/${id}`)
+        .get(`/properties/${propertyType}/${id}`)
         .then((res) => {
           console.log(res);
           setProperty(res.data.property);

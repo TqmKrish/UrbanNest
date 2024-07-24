@@ -3,10 +3,11 @@ import BuyComponent from "./BuyLayout/BuyComponent/BuyComponent";
 import SellComponent from "./SellComponent/SellComponent";
 import ContactMeComponent from "./ContactUsComponent/ContactUsComponent";
 import UserComponent from "./UsersComponent/UsersComponent";
-import RentComponent from "./RentComponent/RentComponent";
-import ViewComponent from "./BuyLayout/ViewComponent/ViewComponent";
+import RentComponent from "./RentLayout/RentComponent/RentComponent";
+import ViewComponent from "../CommonComponents/ViewComponent/ViewComponent";
 import BuyLayout from "./BuyLayout/BuyLayout";
 import { Navigate } from "react-router-dom";
+import RentLayout from "./RentLayout/RentLayout";
 
 const AdminRoutes = [
   {
@@ -24,17 +25,28 @@ const AdminRoutes = [
       },
       {
         path: ":id",
-        element: <ViewComponent />,
+        element: <ViewComponent propertyType="buy" />,
       },
     ],
   },
   {
-    path: "about",
+    path: "sell",
     element: <SellComponent />,
   },
   {
-    path: "projects",
-    element: <RentComponent />,
+    path: "rent",
+    element: <RentLayout />,
+    children: [
+      {
+        path: "",
+        element: <RentComponent />,
+        index: true,
+      },
+      {
+        path: ":id",
+        element: <ViewComponent propertyType="rent" />,
+      },
+    ],
   },
   {
     path: "contact",

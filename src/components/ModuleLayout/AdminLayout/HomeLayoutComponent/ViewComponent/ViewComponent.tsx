@@ -13,7 +13,7 @@ import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import {
   PropertyDetails,
   ReviewDetails,
-} from "../../../../../mockAPI/DB/Properties";
+} from "../../../../../mockAPI/DB/PropertiesForBuy";
 import ModalComponent from "../../../CommonComponents/Modal/ModalComponent";
 
 const ViewComponent = () => {

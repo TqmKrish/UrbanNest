@@ -1,11 +1,14 @@
 import {
-  getProperty,
-  getAllProperties,
   getFilteredProperties,
-  updateProperty,
   deleteProperty,
   addProperty,
-  updateReview
+  updateReview,
+  getAllPropertiesForBuy,
+  getAllPropertiesForRent,
+  getPropertyForBuy,
+  getPropertyForRent,
+  updatePropertyForBuy,
+  updatePropertyForRent,
 } from "./controller/PropertyAPI";
 import { AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -38,9 +41,21 @@ export const MockAPI = (axiosInstance: AxiosInstance) => {
     return;
   });
 
-  mock.onGet(/\/properties\/\d+/).reply((config) => {
-    const propertyId = decodeURIComponent(config.url?.split("/").pop() || "");
-    const property = getProperty(propertyId);
+  mock.onGet(/\/properties\/(buy|rent)\/(\d+)/).reply((config) => {
+    // Extract the parameters from the URL
+    const [type, propertyId] = decodeURIComponent(config.url || "")
+      .split("/")
+      .slice(-2);
+
+    // Fetch the appropriate property data based on type
+    const property =
+      type === "buy"
+        ? getPropertyForBuy(propertyId)
+        : type === "rent"
+        ? getPropertyForRent(propertyId)
+        : null;
+
+    // Return the response based on whether the property was found
     if (property) {
       return [200, { property }];
     } else {
@@ -48,8 +63,14 @@ export const MockAPI = (axiosInstance: AxiosInstance) => {
     }
   });
 
-  mock.onGet("/getAllProperties").reply(() => {
-    const properties = getAllProperties();
+  mock.onGet(/\/getAllProperties\/+/).reply((config) => {
+    const param = decodeURIComponent(config.url?.split("/").pop() || "");
+    const properties =
+      param === "buy"
+        ? getAllPropertiesForBuy()
+        : param === "rent"
+        ? getAllPropertiesForRent()
+        : [];
     if (properties && properties.length) {
       return [200, { properties }];
     } else {
@@ -90,10 +111,17 @@ export const MockAPI = (axiosInstance: AxiosInstance) => {
   });
 
   // Updating property details
-  mock.onPut(/\/properties\/\d+/).reply((config) => {
-    const propertyId = decodeURIComponent(config.url?.split("/").pop() || "");
+  mock.onPut(/\/properties\/(buy|rent)\/(\d+)/).reply((config) => {
+    const [type, propertyId] = decodeURIComponent(config.url || "")
+      .split("/")
+      .slice(-2);
     const updatedDetails = JSON.parse(config.data);
-    const updatedProperty = updateProperty(propertyId, updatedDetails);
+    const updatedProperty =
+      type === "buy"
+        ? updatePropertyForBuy(propertyId, updatedDetails)
+        : type === "rent"
+        ? updatePropertyForRent(propertyId, updatedDetails)
+        : {};
     if (updatedProperty) {
       return [200, { property: updatedProperty }];
     } else {

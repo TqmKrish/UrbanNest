@@ -20,12 +20,12 @@ const Sidebar = ({ open }: any) => {
     },
     {
       name: "Sell",
-      url: `/${moduleName}/admin/about`,
+      url: `/${moduleName}/admin/sell`,
       icon: <MdOutlineSell />,
     },
     {
       name: "Rent",
-      url: `/${moduleName}/admin/projects`,
+      url: `/${moduleName}/admin/rent`,
       icon: <IoHomeOutline />,
     },
     {
