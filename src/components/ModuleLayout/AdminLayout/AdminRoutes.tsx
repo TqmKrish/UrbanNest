@@ -1,11 +1,11 @@
 import React from "react";
-import HomeComponent from "./HomeLayoutComponent/HomeComponent/HomeComponent";
-import AboutComponent from "./AboutComponent/AboutComponent";
-import ContactMeComponent from "./ContactMeComponent/ContactMeComponent";
+import BuyComponent from "./BuyLayout/BuyComponent/BuyComponent";
+import SellComponent from "./SellComponent/SellComponent";
+import ContactMeComponent from "./ContactUsComponent/ContactUsComponent";
 import UserComponent from "./UsersComponent/UsersComponent";
-import ProjectsComponent from "./ProjectsComponent/ProjectsComponent";
-import ViewComponent from "./HomeLayoutComponent/ViewComponent/ViewComponent";
-import HomeLayout from "./HomeLayoutComponent/HomeLayout";
+import RentComponent from "./RentComponent/RentComponent";
+import ViewComponent from "./BuyLayout/ViewComponent/ViewComponent";
+import BuyLayout from "./BuyLayout/BuyLayout";
 import { Navigate } from "react-router-dom";
 
 const AdminRoutes = [
@@ -15,11 +15,11 @@ const AdminRoutes = [
   },
   {
     path: "buy",
-    element: <HomeLayout />,
+    element: <BuyLayout />,
     children: [
       {
         path: "",
-        element: <HomeComponent />,
+        element: <BuyComponent />,
         index: true,
       },
       {
@@ -30,11 +30,11 @@ const AdminRoutes = [
   },
   {
     path: "about",
-    element: <AboutComponent />,
+    element: <SellComponent />,
   },
   {
     path: "projects",
-    element: <ProjectsComponent />,
+    element: <RentComponent />,
   },
   {
     path: "contact",

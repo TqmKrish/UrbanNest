@@ -4,9 +4,9 @@ import "./Carousel.scss";
 
 const CarouselComponent = ({ carouselImages }: any) => {
   return (
-    <Carousel data-bs-theme="dark">
+    <Carousel data-bs-theme="dark" className="h-100">
       {carouselImages?.map((image: any, index: number) => (
-        <Carousel.Item key={index}>
+        <Carousel.Item key={index} className="h-100">
           <img
             className="d-block w-100 carousel-image"
             src={image}

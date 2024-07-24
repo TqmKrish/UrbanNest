@@ -47,7 +47,7 @@ const initialFormValues: PropertyFormValues = {
   images: [],
 };
 
-const AboutComponent: React.FC = () => {
+const SellComponent: React.FC = () => {
   const [formValues, setFormValues] =
     useState<PropertyFormValues>(initialFormValues);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
@@ -278,4 +278,4 @@ const AboutComponent: React.FC = () => {
   );
 };
 
-export default AboutComponent;
+export default SellComponent;

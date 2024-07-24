@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const HomeLayout = () => {
+const BuyLayout = () => {
   return <Outlet />;
 };
 
-export default HomeLayout;
+export default BuyLayout;

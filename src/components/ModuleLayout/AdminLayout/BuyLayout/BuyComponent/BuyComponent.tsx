@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./HomeComponent.scss";
+import "./BuyComponent.scss";
 import { Link } from "react-router-dom";
-import "./HomeComponent.scss";
+import "./BuyComponent.scss";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties";
 
-const HomeComponent = () => {
+const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
   const axiosInstance = axios.create();
   MockAPI(axiosInstance);
@@ -113,4 +113,4 @@ const HomeComponent = () => {
   );
 };
 
-export default HomeComponent;
+export default BuyComponent;

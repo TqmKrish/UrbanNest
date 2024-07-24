@@ -1,17 +1,17 @@
 // import React from "react";
-// import HomeComponent from "../AdminLayout/HomeLayoutComponent/HomeComponent/HomeComponent";
-// import AboutComponent from "../AdminLayout/AboutComponent/AboutComponent";
+// import BuyComponent from "../AdminLayout/BuyLayoutComponent/BuyComponent/BuyComponent";
+// import SellComponent from "../AdminLayout/SellComponent/SellComponent";
 // import ContactMeComponent from "../AdminLayout/ContactMeComponent/ContactMeComponent";
 // import UserComponent from "../AdminLayout/UsersComponent/UsersComponent";
 
 const UserRoutes: any = [
   //   {
   //     path: "home",
-  //     element: <HomeComponent />,
+  //     element: <BuyComponent />,
   //   },
   //   {
   //     path: "about",
-  //     element: <AboutComponent />,
+  //     element: <SellComponent />,
   //   },
   //   {
   //     path: "contact",
