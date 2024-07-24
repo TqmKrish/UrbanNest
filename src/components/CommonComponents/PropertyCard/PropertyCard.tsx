@@ -27,9 +27,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   const formatDate = (dateString: string) => {
     const date = moment(dateString);
     if (date.isSame(moment(), "day")) {
-      return "today";
+      return "Today";
     } else if (date.isSame(moment().subtract(1, "day"), "day")) {
-      return "yesterday";
+      return "Yesterday";
     } else {
       return date.format("DD MMMM");
     }
