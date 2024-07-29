@@ -13,7 +13,7 @@ import {
 import { AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { ifUserExists } from "./controller/userAPI";
-import { UserInfo } from "./DB/users";
+import { UserInfo } from "./DB/Users/Users";
 
 export const MockAPI = (axiosInstance: AxiosInstance) => {
   let mock = new MockAdapter(axiosInstance);

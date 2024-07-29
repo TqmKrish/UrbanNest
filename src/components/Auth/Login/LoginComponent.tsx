@@ -52,11 +52,14 @@ const LoginComponent: React.FC = () => {
             let role: string =
               response?.data?.user?.role === "admin" ? "admin" : "user";
             navigate(`/${moduleName}/${role}`);
+            alert("Login Successful");
           } else {
+            alert("Invalid Credentials");
             setFormState({});
           }
         })
         .catch((error: any) => {
+          alert("Something went wrong")
           console.error(error);
         });
     }

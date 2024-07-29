@@ -3,8 +3,8 @@ import "./BuyComponent.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
-import { PropertyDetails } from "../../../../../mockAPI/DB/PropertiesForBuy";
-import PropertyCard from "../../../../CommonComponents/PropertyCard/PropertyCard";
+import { PropertyDetails } from "../../../../../mockAPI/DB/Properties/PropertiesForBuy";
+import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
 
 const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -45,6 +45,9 @@ const BuyComponent = () => {
       })
       .then((res) => {
         console.log(res);
+        _properties[index].isFavorite
+          ? alert("Added to Favorites")
+          : alert("Removed from Favorites");
         // setProperty(res.data.property);
       })
       .catch((error) => {

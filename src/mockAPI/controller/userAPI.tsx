@@ -1,4 +1,4 @@
-import { UserInfo, demoUsers } from "../DB/users";
+import { UserInfo, demoUsers } from "../DB/Users/Users";
 
 export const ifUserExists = (info: string) => {
   const credentials = JSON.parse(info);

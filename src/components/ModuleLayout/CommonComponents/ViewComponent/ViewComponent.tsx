@@ -13,7 +13,7 @@ import { MockAPI } from "../../../../mockAPI/mockProvider";
 import {
   PropertyDetails,
   ReviewDetails,
-} from "../../../../mockAPI/DB/PropertiesForBuy";
+} from "../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import ModalComponent from "../Modal/ModalComponent";
 
 interface params {

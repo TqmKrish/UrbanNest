@@ -1,0 +1,88 @@
+.admin-profile-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+.admin-profile-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.admin-profile-btn-save, .admin-profile-btn-cancel {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-profile-btn-cancel {
+  background-color: #6c757d;
+}
+
+
+.admin-profile-btn-save,
+.admin-profile-btn-cancel {
+  margin-left: 10px;
+}
+
+.admin-profile-picture-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.admin-profile-picture {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #eaeaea;
+  border-radius: 10px;
+}
+
+.admin-profile-picture-menu-button {
+  position: absolute !important;
+  bottom: 5px;
+  right: 5px;
+  border: 1px solid black !important;
+  background-color: #fafafa !important;
+}
+
+.admin-profile-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-profile-form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.admin-profile-form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-profile-form-group label {
+  margin-bottom: 5px;
+}
+
+.admin-profile-form-group input[type="text"],
+.admin-profile-form-group input[type="email"],
+.admin-profile-form-group input[type="tel"],
+.admin-profile-form-group input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-profile-form-group input[type="checkbox"] {
+  width: auto;
+}

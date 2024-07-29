@@ -5,6 +5,8 @@ import "./Sidebar.scss";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineSell } from "react-icons/md";
 import { MdAddCall } from "react-icons/md";
+import { LuUserCircle } from "react-icons/lu";
+import { FaRegUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { updateTabName } from "../../../../Redux/Name/Name";
 
@@ -32,6 +34,16 @@ const Sidebar = ({ open }: any) => {
       name: "Contact Us",
       url: `/${moduleName}/admin/contact`,
       icon: <MdAddCall />,
+    },
+    // {
+    //   name: "Users",
+    //   url: `/${moduleName}/admin/users`,
+    //   icon: <FaRegUser />,
+    // },
+    {
+      name: "Profile",
+      url: `/${moduleName}/admin/profile`,
+      icon: <LuUserCircle />,
     },
   ];
 

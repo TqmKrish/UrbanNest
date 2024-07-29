@@ -1,12 +1,12 @@
 import React from "react";
 import "./PropertyCard.scss";
-import { PropertyDetails } from "../../../mockAPI/DB/PropertiesForBuy";
+import { PropertyDetails } from "../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { MockAPI } from "../../../mockAPI/mockProvider";
+import { MockAPI } from "../../../../mockAPI/mockProvider";
 import moment from "moment";
 
 // Define the props interface

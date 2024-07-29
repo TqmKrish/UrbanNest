@@ -1,7 +1,7 @@
-import image1 from "../../assets/images/2224.jpg";
-import image2 from "../../assets/images/10276.jpg";
-import image3 from "../../assets/images/logo_make_11_06_2023_8.jpg";
-import LandlordProfileImage from "../../assets/images/images.jpeg";
+import image1 from "../../../assets/images/2224.jpg";
+import image2 from "../../../assets/images/10276.jpg";
+import image3 from "../../../assets/images/logo_make_11_06_2023_8.jpg";
+import LandlordProfileImage from "../../../assets/images/images.jpeg";
 import { PropertyDetails } from "./PropertiesForBuy";
 
 export const propertiesForRent: PropertyDetails[] = [

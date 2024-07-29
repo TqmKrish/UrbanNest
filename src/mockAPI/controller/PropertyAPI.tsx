@@ -1,9 +1,9 @@
-import { PropertyDetails, propertiesForBuy } from "../DB/PropertiesForBuy";
+import { PropertyDetails, propertiesForBuy } from "../DB/Properties/PropertiesForBuy";
 import { v4 as uuidv4 } from "uuid";
 import image1 from "../../assets/images/2224.jpg";
 import image2 from "../../assets/images/10276.jpg";
 import image3 from "../../assets/images/logo_make_11_06_2023_8.jpg";
-import { propertiesForRent } from "../DB/PropertiesForRent";
+import { propertiesForRent } from "../DB/Properties/PropertiesForRent";
 
 export const getPropertyForBuy = (id: string) => {
   return propertiesForBuy.filter((item: PropertyDetails) => item.id === id)[0];
