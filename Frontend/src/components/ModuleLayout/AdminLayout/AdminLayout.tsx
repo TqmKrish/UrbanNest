@@ -4,8 +4,9 @@ import "./AdminLayout.scss";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../CommonComponents/Sidebar/Sidebar";
 import Header from "../CommonComponents/Header/Header";
+import Chatbot from "../../CommonComponents/Chatbot/Chatbot";
 
-const AdminLayout = () => {
+const AdminLayout: React.FC = () => {
   const [open, setOpen] = useState(true);
 
   const handleDrawerToggle = () => {
@@ -23,6 +24,9 @@ const AdminLayout = () => {
         </div>
         <div className="content">
           <Outlet />
+        </div>
+        <div className="chatbot">
+          <Chatbot />
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-const ProtectedModuleRoute = () => {
-  let userDetails = JSON.parse(localStorage?.getItem("userDetails") || "{}");
-  let content: React.JSX.Element = {} as React.JSX.Element;
-  userDetails?.token?.length
-    ? (content = <Outlet />)
-    : (content = <Navigate to="/auth" />);
-  return <>{content}</>;
+const ProtectedModuleRoute: React.FC = () => {
+  const userDetails = JSON.parse(localStorage.getItem("userDetails") || "null");
+
+  if (userDetails) {
+    return <Outlet />;
+  }
+
+  return <Navigate to="/auth" replace />;
 };
 
 export default ProtectedModuleRoute;

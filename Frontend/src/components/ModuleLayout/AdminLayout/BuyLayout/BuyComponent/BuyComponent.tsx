@@ -5,6 +5,7 @@ import axios from "axios";
 import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
+import AISearch from "../../AISearch/AISearch";
 
 const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -56,16 +57,21 @@ const BuyComponent = () => {
   };
 
   return (
-    <div className="property-container">
-      {properties.map((item, index) => (
-        <PropertyCard
-          property={item}
-          index={index}
-          key={item.id}
-          onToggleFavorite={handleToggleFavorite}
-        />
-      ))}
-    </div>
+    <>
+      <div className="search-container">
+        <AISearch parent="buy" />
+      </div>
+      <div className="property-container">
+        {properties.map((item, index) => (
+          <PropertyCard
+            property={item}
+            index={index}
+            key={item.id}
+            onToggleFavorite={handleToggleFavorite}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

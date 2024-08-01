@@ -5,12 +5,10 @@ import { UserInfo } from "../../../../mockAPI/DB/Users/Users";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { FiEdit2 } from "react-icons/fi";
 
-interface AdminProfileProps {
-  admin: UserInfo;
-}
-
 const ProfileComponent: React.FC = () => {
-  const admin: UserInfo = {} as UserInfo;
+  const admin: UserInfo = JSON.parse(
+    localStorage.getItem("userDetails") ?? "{}"
+  ) as UserInfo;
   const [editableAdmin, setEditableAdmin] = useState<UserInfo>(admin);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -84,13 +82,22 @@ const ProfileComponent: React.FC = () => {
             open={open}
             onClose={handleMenuClose}
           >
-            <MenuItem className="gap-2" onClick={() => handleProfilePictureAction("view")}>
+            <MenuItem
+              className="gap-2"
+              onClick={() => handleProfilePictureAction("view")}
+            >
               <FaEye /> View
             </MenuItem>
-            <MenuItem className="gap-2" onClick={() => handleProfilePictureAction("remove")}>
+            <MenuItem
+              className="gap-2"
+              onClick={() => handleProfilePictureAction("remove")}
+            >
               <FaTrash /> Remove
             </MenuItem>
-            <MenuItem className="gap-2" onClick={() => handleProfilePictureAction("update")}>
+            <MenuItem
+              className="gap-2"
+              onClick={() => handleProfilePictureAction("update")}
+            >
               <FaCamera /> Update
             </MenuItem>
           </Menu>
@@ -217,7 +224,9 @@ const ProfileComponent: React.FC = () => {
               checked={editableAdmin.notificationsEnabled}
               onChange={handleChange}
             />
-            <label className="mb-0" htmlFor="notificationsEnabled">Notifications Enabled</label>
+            <label className="mb-0" htmlFor="notificationsEnabled">
+              Notifications Enabled
+            </label>
           </div>
         </div>
       </form>

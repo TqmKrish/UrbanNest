@@ -9,14 +9,16 @@ header {
 }
 
 button.header-btn {
-  height: 40px;
-  width: 40px;
+  height: 20px;
+  width: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: wheat;
-  margin: 0 4px;
+  margin: 0 16px 0 0;
   border-radius: 12px;
-  font-size: 20px;
-  color: white;
+  color: rgb(79, 70, 229);
+
+  svg {
+    font-size: 24px;
+  }
 }

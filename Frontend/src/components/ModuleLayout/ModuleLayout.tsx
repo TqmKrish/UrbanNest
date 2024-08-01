@@ -1,13 +1,11 @@
 import React from "react";
 import AdminLayout from "./AdminLayout/AdminLayout";
 import UserLayout from "./UserLayout/UserLayout";
-import { useNavigate } from "react-router-dom";
-import { moduleName } from "../../GlobalVariables";
 
-const ModuleLayout = () => {
-  let isLoggedIn: boolean = true;
-  let userRole: string = "admin";
-  let navigate = useNavigate();
+const ModuleLayout: React.FC = () => {
+  let userRole: string = JSON.parse(
+    localStorage.getItem("userDetails") ?? "{}"
+  );
   return <>{userRole === "user" ? <UserLayout /> : <AdminLayout />}</>;
 };
 

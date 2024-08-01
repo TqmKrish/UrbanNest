@@ -40,31 +40,31 @@ const LoginComponent: React.FC = () => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      // Handle login logic here
-      axiosInstance
-        .post("/login", formState)
-        .then((response: any) => {
-          if (response?.data?.isLoginSuccessful) {
-            localStorage.setItem(
-              "userDetails",
-              JSON.stringify(response?.data?.user)
-            );
-            let role: string =
-              response?.data?.user?.role === "admin" ? "admin" : "user";
-            navigate(`/${moduleName}/${role}`);
-            alert("Login Successful");
+      axios
+        .post("http://localhost:5000/api/login", formState)
+        .then((response) => {
+          if (response.data.isLoginSuccessful) {
+            let user = response.data.user;
+            localStorage.setItem("userDetails", JSON.stringify(user));
+            console.log(`/${moduleName}/${user.role}`);
+            navigate(`/${moduleName}/${user.role}`);
           } else {
-            alert("Invalid Credentials");
-            setFormState({});
+            alert(response.data.message);
           }
         })
-        .catch((error: any) => {
-          alert("Something went wrong")
+        .catch((error) => {
+          alert("Something went wrong");
           console.error(error);
         });
     }
   };
 
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/api/users")
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.error("Error:", error));
+  // }, []);
   return (
     <div className="layout-wrapper ">
       <div className="title">

@@ -3,7 +3,8 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
   padding: 40px 70px;
-  justify-content: center;
 }
 
-
+.search-container {
+  padding: 40px 70px 0;
+}
