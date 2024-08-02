@@ -4,11 +4,12 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const emailRoutes = require("./routes/emailRoutes");
 const { errorMiddleware } = require("./middleware/errorMiddleware");
+const { corsOptions } = require("./config/corsConfig");
 
 const app = express();
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 // Define routes
 app.use("/api", userRoutes);
