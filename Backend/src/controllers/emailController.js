@@ -1,7 +1,7 @@
 const { configureCredentialsAndSendEmail } = require('../services/emailService');
 
 // Send an email
-const sendEmail = async (req, res) => {
+const initiateEmailSending = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     await configureCredentialsAndSendEmail(name, email, subject, message);
@@ -12,4 +12,4 @@ const sendEmail = async (req, res) => {
   }
 };
 
-module.exports = { sendEmail };
+module.exports = { initiateEmailSending };

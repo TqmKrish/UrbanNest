@@ -56,7 +56,7 @@ const ContactUs: React.FC = () => {
       formData.message
     ) {
       const email = await axios.post(
-        "http://localhost:5000/send-email",
+        "http://localhost:5000/api/send-email",
         formData
       );
       console.log(email);
