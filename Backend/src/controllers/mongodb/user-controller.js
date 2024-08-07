@@ -6,37 +6,39 @@ const handleGetAllUsers = async (req, res) => {
 };
 
 const handleCreateNewUser = async (req, res) => {
-    const {
-        fullName,
-        username,
-        email,
-        contactNumber,
-        address,
-        profilePicture,
-        socialLinks,
-        preferredContactMethod,
-        bio,
-        certifications,
-        propertiesListed,
-        rating,
-      } = req.body;
-  
-      const user = await User.create({
-        fullName,
-        username,
-        email,
-        contactNumber,
-        address,
-        profilePicture,
-        socialLinks,
-        preferredContactMethod,
-        bio,
-        certifications,
-        propertiesListed,
-        rating,
-      });
-  
-      return res.status(200).json({ data: user, isActionSuccessful: true });
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    contactNumber,
+    address,
+    profilePicture,
+    socialLinks,
+    preferredContactMethod,
+    bio,
+    certifications,
+    propertiesListed,
+    rating,
+  } = req.body;
+
+  const user = await User.create({
+    firstName,
+    lastName,
+    username,
+    email,
+    contactNumber,
+    address,
+    profilePicture,
+    socialLinks,
+    preferredContactMethod,
+    bio,
+    certifications,
+    propertiesListed,
+    rating,
+  });
+
+  return res.status(200).json({ data: user, isActionSuccessful: true });
 };
 
 const handleGetUserById = async (req, res) => {
