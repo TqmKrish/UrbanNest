@@ -8,7 +8,7 @@ const {
   handleUpdateUserById,
   handleDeleteUserById,
   handleCreateNewUser,
-} = require("../controllers/mongodb/user");
+} = require("../controllers/mongodb/user-controller");
 const { errorHandler } = require("../helpers/errorHandler");
 
 const router = express.Router();

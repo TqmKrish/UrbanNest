@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
-const emailRoutes = require("./routes/email");
+const authRoutes = require("./routes/auth-routes.js");
+const userRoutes = require("./routes/user-routes.js");
+const emailRoutes = require("./routes/email-routes.js");
 const { errorMiddleware } = require("./helpers/errorHandler.js");
 const { corsOptions } = require("./config/corsConfig");
 const { connectMongoDB } = require("./connection.js");

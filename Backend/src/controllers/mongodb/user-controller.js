@@ -1,4 +1,4 @@
-const User = require("../../models/mongo/User/user");
+const User = require("../../models/mongo/User/user-model");
 
 const handleGetAllUsers = async (req, res) => {
   const allUsers = await User.find({});
