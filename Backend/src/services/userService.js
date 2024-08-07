@@ -1,4 +1,4 @@
-const { db } = require("../config/dbConfig");
+const { db } = require("../config/sqlDbConfig");
 
 // Validate user credentials
 const validateUserCredentials = (username, password, callback) => {

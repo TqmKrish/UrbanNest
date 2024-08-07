@@ -1,5 +1,5 @@
 const { validateUserCredentials } = require("../services/userService");
-const { db } = require("../config/dbConfig");
+const { db } = require("../config/sqlDbConfig");
 
 // Fetch all users from the database
 const getAllUsers = (req, res) => {
