@@ -1,8 +1,5 @@
 const express = require("express");
 const {
-  loginUser,
-} = require("../controllers/userController");
-const {
   handleGetAllUsers,
   handleGetUserById,
   handleUpdateUserById,
@@ -24,8 +21,5 @@ router
   .delete(errorHandler(handleDeleteUserById));
 
 router.post("/create-user", errorHandler(handleCreateNewUser));
-
-// Route to get logged in user
-router.post("/login", loginUser);
 
 module.exports = router;

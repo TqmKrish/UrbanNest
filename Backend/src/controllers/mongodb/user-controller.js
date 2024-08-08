@@ -1,4 +1,4 @@
-const User = require("../../models/mongo/User/user-model");
+const { User, Admin } = require("../../models/mongo/User/user-model");
 
 const handleGetAllUsers = async (req, res) => {
   const allUsers = await User.find({});
@@ -14,12 +14,12 @@ const handleCreateNewUser = async (req, res) => {
     contactNumber,
     address,
     profilePicture,
-    socialLinks,
-    preferredContactMethod,
     bio,
     certifications,
     propertiesListed,
     rating,
+    socialLinks,
+    preferredContactMethod,
   } = req.body;
 
   const user = await User.create({
@@ -27,15 +27,16 @@ const handleCreateNewUser = async (req, res) => {
     lastName,
     username,
     email,
+    role: "USER",
     contactNumber,
     address,
     profilePicture,
-    socialLinks,
-    preferredContactMethod,
     bio,
     certifications,
     propertiesListed,
     rating,
+    socialLinks,
+    preferredContactMethod,
   });
 
   return res.status(200).json({ data: user, isActionSuccessful: true });
@@ -52,7 +53,66 @@ const handleUpdateUserById = async (req, res) => {
 };
 
 const handleDeleteUserById = async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id); //update info here
+  await User.findByIdAndDelete(req.params.id); //update info here
+  return res.status(200).json({ isActionSuccessful: true });
+};
+
+// Admin functions
+
+const handleGetAllAdmins = async (req, res) => {
+  const allAdmins = await Admin.find({});
+  return res.status(200).json({ data: allAdmins, isActionSuccessful: true });
+};
+
+const handleCreateNewAdmin = async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    contactNumber,
+    address,
+    profilePicture,
+    bio,
+    certifications,
+    propertiesListed,
+    rating,
+    socialLinks,
+    preferredContactMethod,
+  } = req.body;
+
+  const admin = await Admin.create({
+    firstName,
+    lastName,
+    username,
+    email,
+    contactNumber,
+    address,
+    profilePicture,
+    bio,
+    certifications,
+    propertiesListed,
+    rating,
+    socialLinks,
+    role: "ADMIN",
+    preferredContactMethod,
+  });
+
+  return res.status(200).json({ data: admin, isActionSuccessful: true });
+};
+
+const handleGetAdminById = async (req, res) => {
+  const admin = await Admin.findById(req.params.id);
+  return res.status(200).json({ data: admin, isActionSuccessful: true });
+};
+
+const handleUpdateAdminById = async (req, res) => {
+  const admin = await Admin.findByIdAndUpdate(req.params.id, {}); //update info here
+  return res.status(200).json({ data: admin, isActionSuccessful: true });
+};
+
+const handleDeleteAdminById = async (req, res) => {
+  await Admin.findByIdAndDelete(req.params.id); //update info here
   return res.status(200).json({ isActionSuccessful: true });
 };
 
@@ -62,4 +122,9 @@ module.exports = {
   handleUpdateUserById,
   handleDeleteUserById,
   handleCreateNewUser,
+  handleGetAllAdmins,
+  handleGetAdminById,
+  handleUpdateAdminById,
+  handleDeleteAdminById,
+  handleCreateNewAdmin,
 };
