@@ -9,6 +9,7 @@ const { errorMiddleware } = require("./helpers/errorHandler.js");
 const { corsOptions } = require("./config/corsConfig");
 const { connectMongoDB } = require("./connection.js");
 const generateLogReqRes = require("./middleware/generate-logs.js");
+const { isAuthenticated, restrictRouteTo } = require("./middleware/auth.js");
 
 const app = express();
 
@@ -21,9 +22,9 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);
 // app.use(middlewareConfig);
+// app.use(isAuthenticated);
 
 // Define routes
-app.use("/api/admin", adminRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api", emailRoutes);
 
