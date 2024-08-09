@@ -1,18 +1,18 @@
 const { User } = require("../../models/mongo/User/user-model");
+const { comparePassword } = require("../../utils/password-utils");
+const { generateJWT, saveTokenInDB } = require("../../utils/token-utils");
 
 const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     // Find user by email
     const user = await User.findOne({ email });
-    console.log("a", email);
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
     // Compare password
-    const isMatch = await user.comparePassword(email, password);
+    const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -41,13 +41,25 @@ const handleLogin = async (req, res) => {
         user.role === "admin" ? user.managedPropertiesCount : undefined,
     };
 
+    // Generate JWT
+    const token = await generateJWT(user.email, user.role);
+    if (token) {
+      const isTokenSaved = await saveTokenInDB(user._id, user.email, token);
+      if (!isTokenSaved) {
+        return res.status(500).json({ message: "Failed to save token" });
+      }
+    }
+
     // Remove undefined fields
     Object.keys(userData).forEach(
       (key) => userData[key] === undefined && delete userData[key]
     );
 
-    return res.status(200).json({ data: userData, isActionSuccessful: true });
+    return res
+      .status(200)
+      .json({ data: userData, token: token, isActionSuccessful: true });
   } catch (err) {
+    console.error(err);
     return res
       .status(500)
       .json({ message: "Internal server error. Something went wrong" });

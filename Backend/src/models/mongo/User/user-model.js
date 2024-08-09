@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
+const { hashPassword } = require("../../../utils/password-utils");
 // Common fields for both User and Admin
 const userSchema = new Schema(
   {
@@ -29,20 +29,11 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// Pre-save hook to set the `verified` field based on `role`
-userSchema.pre("save", (next) => {
-  if (this.isModified("role")) {
-    this.verified = this.role === "admin";
-  }
-  next();
-});
-
 // Pre-save hook to hash the password
-userSchema.pre("save", async (next) => {
+userSchema.pre("save", async function (next) {
   if (this.isModified("password") || this.isNew) {
     try {
-      const salt = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, salt);
+      this.password = await hashPassword(this.password);
     } catch (error) {
       console.error(error);
       return next(error);
@@ -55,18 +46,6 @@ userSchema.pre("save", async (next) => {
 
   next();
 });
-
-const fetchPassword = async (email) => {
-  const user = await User.findOne({ email });
-  console.log(user);
-  return user.password;
-};
-
-// Method to compare password
-userSchema.methods.comparePassword = async (email, candidatePassword) => {
-  console.log(candidatePassword, fetchPassword(email));
-  return bcrypt.compare(candidatePassword, await fetchPassword(email));
-};
 
 // Create a schema for the User
 // const userSchema = new Schema(

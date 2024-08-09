@@ -36,7 +36,6 @@ const handleCreateNewUser = async (req, res) => {
       address,
       profilePicture,
       bio: role === "user" ? bio : undefined, // Only for users
-      certifications: role === "user" ? certifications : undefined, // Only for users
       propertiesListed: role === "user" ? propertiesListed : undefined, // Only for users
       rating: role === "user" ? rating : undefined, // Only for users
       socialLinks,
@@ -47,6 +46,7 @@ const handleCreateNewUser = async (req, res) => {
 
     return res.status(200).json({ data: newUser, isActionSuccessful: true });
   } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ message: "Internal server error. Something went wrong" });

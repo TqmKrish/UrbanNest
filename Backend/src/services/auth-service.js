@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const secret = "11@SeCrEtKeY@11";
 
 const setUser = (user) => {
   const payload = { _id: user._id, email: email };
@@ -8,8 +7,9 @@ const setUser = (user) => {
 
 const getUser = (token) => {
   try {
+    console.log(token);
     if (!token) return null;
-    return jwt.verify(token, secret);
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (error) {
     console.error(error);
     return null;

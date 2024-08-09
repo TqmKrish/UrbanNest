@@ -22,7 +22,7 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);
 // app.use(middlewareConfig);
-// app.use(isAuthenticated);
+app.use(isAuthenticated);
 
 // Define routes
 app.use("/api/user", userRoutes);

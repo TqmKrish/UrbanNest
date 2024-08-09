@@ -4,14 +4,18 @@ const isAuthenticated = (req, res, next) => {
   const authHeaderValue = req.headers["authorization"];
   //   req.user = null;
   if (!authHeaderValue || !authHeaderValue.startsWith("Bearer")) {
-    return next();
+    return res.status(401).json({ message: "Unauthorized User" });
   }
 
   const token = authHeaderValue.split("Bearer ")[1];
   const user = getUser(token);
 
-  req.user = user;
-  return next();
+  if (user && user.role === "admin") {
+    req.user = user;
+    return next();
+  }
+
+  return res.status(401).json({ message: "Unauthorized User" });
 };
 
 const restrictRouteTo = (roles = []) => {
