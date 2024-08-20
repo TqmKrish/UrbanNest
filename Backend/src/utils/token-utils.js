@@ -4,7 +4,7 @@ const { Token } = require("../models/mongo/token/token-model");
 // Function to generate JWT
 const generateJWT = async (email, role) => {
   const payload = { email, role };
-  const secret = process.env.JWT_SECRET; // Ensure this is correctly set in your environment
+  const secret = process.env.JWT_SECRET_KEY; // Ensure this is correctly set in your environment
   const token = jwt.sign(payload, secret, { expiresIn: "1h" }); // 1-hour expiration
   return token;
 };
