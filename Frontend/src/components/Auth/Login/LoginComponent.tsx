@@ -24,8 +24,8 @@ const LoginComponent: React.FC = () => {
 
   const validate = () => {
     const newErrors: FormState = {};
-    if (!formState.username) {
-      newErrors.username = "Username is required.";
+    if (!formState.email) {
+      newErrors.email = "Email is required.";
     }
     if (!formState.password) {
       newErrors.password = "Password is required.";
@@ -73,18 +73,16 @@ const LoginComponent: React.FC = () => {
       <div>
         <form onSubmit={validateAndLogin}>
           <div className="input-wrapper">
-            <label htmlFor="username">Username* :</label>
+            <label htmlFor="email">Email* :</label>
             <input
               type="text"
-              id="username"
-              name="username"
-              value={formState.username || ""}
+              id="email"
+              name="email"
+              value={formState.email || ""}
               onChange={handleChange}
               placeholder="Type your email"
             />
-            {errors.username && (
-              <p style={{ color: "red" }}>{errors.username}</p>
-            )}
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password* :</label>
