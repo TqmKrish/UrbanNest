@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { MockAPI } from "../../../../mockAPI/mockProvider";
 import { useNavigate } from "react-router-dom";
+import axiosInterceptor from "../../../../Interceptor/axiosInterceptor";
 
 interface PropertyFormValues {
-  name: string;
   title: string;
   description: string;
   type: string;
@@ -12,7 +12,6 @@ interface PropertyFormValues {
   bathrooms: number;
   furnishing: string;
   constructionStatus: string;
-  listedBy: string;
   superBuiltUpArea: number;
   carpetArea: number;
   totalFloors: number;
@@ -26,7 +25,6 @@ interface PropertyFormValues {
 }
 
 const initialFormValues: PropertyFormValues = {
-  name: "",
   title: "",
   description: "",
   type: "",
@@ -34,7 +32,6 @@ const initialFormValues: PropertyFormValues = {
   bathrooms: 0,
   furnishing: "",
   constructionStatus: "",
-  listedBy: "",
   superBuiltUpArea: 0,
   carpetArea: 0,
   totalFloors: 0,
@@ -57,6 +54,77 @@ const SellComponent: React.FC = () => {
   const axiosInstance = axios.create();
   MockAPI(axiosInstance);
   const navigate = useNavigate();
+
+  const formFields = [
+    { name: "title", label: "Title", placeholder: "Enter title" },
+    { name: "type", label: "Type", placeholder: "Enter property type" },
+    {
+      name: "bedrooms",
+      label: "Bedrooms",
+      placeholder: "Number of bedrooms",
+    },
+    {
+      name: "bathrooms",
+      label: "Bathrooms",
+      placeholder: "Number of bathrooms",
+    },
+    {
+      name: "furnishing",
+      label: "Furnishing",
+      placeholder: "Enter furnishing details",
+    },
+    {
+      name: "constructionStatus",
+      label: "Construction Status",
+      placeholder: "Enter construction status",
+    },
+    {
+      name: "superBuiltUpArea",
+      label: "Super Built-Up Area",
+      placeholder: "Enter super built-up area",
+    },
+    {
+      name: "carpetArea",
+      label: "Carpet Area",
+      placeholder: "Enter carpet area",
+    },
+    {
+      name: "totalFloors",
+      label: "Total Floors",
+      placeholder: "Enter total number of floors",
+    },
+    {
+      name: "floorNo",
+      label: "Floor No",
+      placeholder: "Enter floor number",
+    },
+    {
+      name: "carParking",
+      label: "Car Parking",
+      placeholder: "Enter car parking details",
+    },
+    {
+      name: "facing",
+      label: "Facing",
+      placeholder: "Enter facing direction",
+    },
+    {
+      name: "projectName",
+      label: "Project Name",
+      placeholder: "Enter project name",
+    },
+    { name: "price", label: "Price", placeholder: "Enter price" },
+    {
+      name: "location",
+      label: "Location",
+      placeholder: "Enter location",
+    },
+    {
+      name: "description",
+      label: "Description",
+      placeholder: "Enter description",
+    },
+  ];
 
   const validate = () => {
     const newErrors: { [key in keyof PropertyFormValues]?: string } = {};
@@ -113,9 +181,24 @@ const SellComponent: React.FC = () => {
           formData.append(key, (formValues as any)[key]);
         }
       });
-      const response = await axiosInstance.post("/properties", formData);
-      console.log(response.data);
-      navigate("../buy");
+
+      formData.append(
+        "sellerId",
+        JSON.parse(localStorage.getItem("userDetails") ?? "")?.id
+      );
+
+      axiosInterceptor
+        .post("http://localhost:5000/api/property/sell", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((response: any) => {
+          console.log(response);
+          alert("Property listed for sale..")
+          navigate("../buy");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -124,82 +207,7 @@ const SellComponent: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-white">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {[
-          { name: "name", label: "Name", placeholder: "Enter name" },
-          { name: "title", label: "Title", placeholder: "Enter title" },
-          { name: "type", label: "Type", placeholder: "Enter property type" },
-          {
-            name: "bedrooms",
-            label: "Bedrooms",
-            placeholder: "Number of bedrooms",
-          },
-          {
-            name: "bathrooms",
-            label: "Bathrooms",
-            placeholder: "Number of bathrooms",
-          },
-          {
-            name: "furnishing",
-            label: "Furnishing",
-            placeholder: "Enter furnishing details",
-          },
-          {
-            name: "constructionStatus",
-            label: "Construction Status",
-            placeholder: "Enter construction status",
-          },
-          {
-            name: "listedBy",
-            label: "Listed By",
-            placeholder: "Enter name of the lister",
-          },
-          {
-            name: "superBuiltUpArea",
-            label: "Super Built-Up Area",
-            placeholder: "Enter super built-up area",
-          },
-          {
-            name: "carpetArea",
-            label: "Carpet Area",
-            placeholder: "Enter carpet area",
-          },
-          {
-            name: "totalFloors",
-            label: "Total Floors",
-            placeholder: "Enter total number of floors",
-          },
-          {
-            name: "floorNo",
-            label: "Floor No",
-            placeholder: "Enter floor number",
-          },
-          {
-            name: "carParking",
-            label: "Car Parking",
-            placeholder: "Enter car parking details",
-          },
-          {
-            name: "facing",
-            label: "Facing",
-            placeholder: "Enter facing direction",
-          },
-          {
-            name: "projectName",
-            label: "Project Name",
-            placeholder: "Enter project name",
-          },
-          { name: "price", label: "Price", placeholder: "Enter price" },
-          {
-            name: "location",
-            label: "Location",
-            placeholder: "Enter location",
-          },
-          {
-            name: "description",
-            label: "Description",
-            placeholder: "Enter description",
-          },
-        ].map((field, index) => (
+        {formFields.map((field, index) => (
           <div key={index} className="flex flex-col">
             <label htmlFor={field.name} className="font-medium text-gray-700">
               {field.label}
