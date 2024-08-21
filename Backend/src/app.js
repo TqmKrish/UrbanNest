@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth-routes.js");
 const userRoutes = require("./routes/user-routes.js");
-const adminRoutes = require("./routes/admin-routes.js");
+const propertyRoutes = require("./routes/property-routes.js");
 const emailRoutes = require("./routes/email-routes.js");
 const { errorMiddleware } = require("./helpers/errorHandler.js");
 const { corsOptions } = require("./config/corsConfig");
@@ -26,6 +26,7 @@ app.use(isAuthenticated);
 
 // Define routes
 app.use("/api/user", userRoutes);
+app.use("/api/property", propertyRoutes);
 app.use("/api", emailRoutes);
 
 module.exports = app;

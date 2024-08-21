@@ -41,20 +41,20 @@ const LoginComponent: React.FC = () => {
       setErrors(validationErrors);
     } else {
       axios
-        .post("http://localhost:5000/api/login", formState)
+        .post("http://localhost:5000/api/auth/login", formState)
         .then((response) => {
-          if (response.data.isLoginSuccessful) {
+          if (response.data.isActionSuccessful) {
             let user = response.data.user;
             localStorage.setItem("userDetails", JSON.stringify(user));
-            console.log(`/${moduleName}/${user.role}`);
+            localStorage.setItem("token", JSON.stringify(response.data.token));
             navigate(`/${moduleName}/${user.role}`);
           } else {
             alert(response.data.message);
           }
         })
         .catch((error) => {
-          alert("Something went wrong");
           console.error(error);
+          alert("Something went wrong");
         });
     }
   };

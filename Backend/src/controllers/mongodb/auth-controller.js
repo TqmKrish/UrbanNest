@@ -8,12 +8,14 @@ const handleLogin = async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("email wrong");
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
     // Compare password
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
+      console.log("password wrong");
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
@@ -57,7 +59,7 @@ const handleLogin = async (req, res) => {
 
     return res
       .status(200)
-      .json({ data: userData, token: token, isActionSuccessful: true });
+      .json({ user: userData, token: token, isActionSuccessful: true });
   } catch (err) {
     console.error(err);
     return res

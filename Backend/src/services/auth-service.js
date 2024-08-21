@@ -7,7 +7,6 @@ const setUser = (user) => {
 
 const getUser = (token) => {
   try {
-    console.log(token);
     if (!token) return null;
     return jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (error) {

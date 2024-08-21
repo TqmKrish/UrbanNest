@@ -6,6 +6,8 @@ import { MockAPI } from "../../../../../mockAPI/mockProvider";
 import { PropertyDetails } from "../../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
 import AISearch from "../../AISearch/AISearch";
+import axiosInterceptor from "../../../../../Interceptor/axiosInterceptor";
+
 
 const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -15,6 +17,15 @@ const BuyComponent = () => {
   let [properties, setProperties] = useState<PropertyDetails[]>([]);
 
   useEffect(() => {
+    axiosInterceptor
+      .get("http://localhost:5000/api/property/buy")
+      .then((response: any) => {
+        console.log(response);
+      })
+      .catch((error: any) => {
+        console.error("error", error);
+      });
+
     axiosInstance
       .get("/getAllProperties/buy")
       .then((res: any) => {
@@ -58,9 +69,9 @@ const BuyComponent = () => {
 
   return (
     <>
-      <div className="search-container">
+      {/* <div className="search-container">
         <AISearch parent="buy" />
-      </div>
+      </div> */}
       <div className="property-container">
         {properties.map((item, index) => (
           <PropertyCard
