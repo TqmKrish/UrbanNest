@@ -4,3 +4,4 @@ export const appDetails = {
   alt: "image-alt",
 };
 export const moduleName = "moduleName";
+export const envUrl = "http://localhost:5000/";

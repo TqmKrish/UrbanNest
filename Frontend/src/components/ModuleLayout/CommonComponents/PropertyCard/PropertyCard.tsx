@@ -5,15 +5,14 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { MockAPI } from "../../../../mockAPI/mockProvider";
 import moment from "moment";
+import { envUrl } from "../../../../GlobalVariables";
 
 // Define the props interface
 interface PropertyCardProps {
   property: PropertyDetails;
   index: number;
-  onToggleFavorite: (id: string, index: number) => void;
+  onToggleFavorite: (_id: string, index: number) => void;
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
@@ -21,9 +20,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   index,
   onToggleFavorite,
 }) => {
-  const axiosInstance = axios.create();
-  MockAPI(axiosInstance);
-
   const formatDate = (dateString: string) => {
     const date = moment(dateString);
     if (date.isSame(moment(), "day")) {
@@ -54,7 +50,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       >
         <img
           className="property-image"
-          src={property.images[index % 3]}
+          src={envUrl + property.images[0]}
           alt={property.name}
         />
         <div className="card-details">

@@ -55,14 +55,18 @@ const RentComponent = () => {
 
   return (
     <div className="property-container">
-      {properties.map((item, index) => (
-        <PropertyCard
-          property={item}
-          index={index}
-          key={item.id}
-          onToggleFavorite={handleToggleFavorite}
-        />
-      ))}
+      {properties.length > 0 ? (
+        properties.map((item, index) => (
+          <PropertyCard
+            property={item}
+            index={index} // Ensure index or another unique value for key if needed
+            key={item.id} // Use item.id for the unique key prop
+            onToggleFavorite={handleToggleFavorite}
+          />
+        ))
+      ) : (
+        <p>No properties available</p> // Optional: display a message if there are no properties
+      )}
     </div>
   );
 };

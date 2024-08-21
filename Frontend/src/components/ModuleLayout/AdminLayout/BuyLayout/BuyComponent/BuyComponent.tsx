@@ -8,7 +8,6 @@ import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
 import AISearch from "../../AISearch/AISearch";
 import axiosInterceptor from "../../../../../Interceptor/axiosInterceptor";
 
-
 const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
   const axiosInstance = axios.create();
@@ -21,19 +20,20 @@ const BuyComponent = () => {
       .get("http://localhost:5000/api/property/buy")
       .then((response: any) => {
         console.log(response);
+        setProperties(response.data.properties);
       })
       .catch((error: any) => {
         console.error("error", error);
       });
 
-    axiosInstance
-      .get("/getAllProperties/buy")
-      .then((res: any) => {
-        setProperties(res.data.properties);
-      })
-      .catch((error: any) => {
-        console.log("error", error);
-      });
+    // axiosInstance
+    //   .get("/getAllProperties/buy")
+    //   .then((res: any) => {
+    //     setProperties(res.data.properties);
+    //   })
+    //   .catch((error: any) => {
+    //     console.log("error", error);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -68,21 +68,20 @@ const BuyComponent = () => {
   };
 
   return (
-    <>
-      {/* <div className="search-container">
-        <AISearch parent="buy" />
-      </div> */}
-      <div className="property-container">
-        {properties.map((item, index) => (
+    <div className="property-container">
+      {properties.length > 0 ? (
+        properties.map((item, index) => (
           <PropertyCard
             property={item}
-            index={index}
-            key={item.id}
+            index={index} // Ensure index or another unique value for key if needed
+            key={item.id} // Use item.id for the unique key prop
             onToggleFavorite={handleToggleFavorite}
           />
-        ))}
-      </div>
-    </>
+        ))
+      ) : (
+        <p>No properties available</p> // Optional: display a message if there are no properties
+      )}
+    </div>
   );
 };
 

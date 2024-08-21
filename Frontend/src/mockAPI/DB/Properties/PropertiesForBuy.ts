@@ -5,7 +5,8 @@ import SellerProfileImage from "../../../assets/images/images.jpeg";
 
 export interface SellerDetails {
   id: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   role: string;
@@ -45,7 +46,7 @@ export interface PropertyDetails {
   projectName: string;
   price: number;
   postedDate: string;
-  images: string[];
+  images: any;
   location: string;
   locationCoordinates: LocationCoordinates;
   isFavorite: boolean;
@@ -67,7 +68,7 @@ interface LocationCoordinates {
   longitude: number;
 }
 
-export const propertiesForBuy: PropertyDetails[] = [
+export const propertiesForBuy: any[] = [
   {
     id: "1001000100010088",
     name: "Sunny Apartment",

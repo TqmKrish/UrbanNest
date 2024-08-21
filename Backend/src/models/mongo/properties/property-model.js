@@ -32,7 +32,8 @@ const propertySchema = new Schema(
       required: true,
     },
     sellerId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     superBuiltUpArea: {
@@ -71,42 +72,7 @@ const propertySchema = new Schema(
       type: String,
       required: true,
     },
-    images: [
-      {
-        fieldname: {
-          type: String, // Field name from the form data
-          required: true,
-        },
-        originalname: {
-          type: String, // Original file name
-          required: true,
-        },
-        encoding: {
-          type: String, // File encoding
-          required: true,
-        },
-        mimetype: {
-          type: String, // MIME type of the file
-          required: true,
-        },
-        destination: {
-          type: String, // Upload destination directory
-          required: true,
-        },
-        filename: {
-          type: String, // Generated filename
-          required: true,
-        },
-        path: {
-          type: String, // Path to the file
-          required: true,
-        },
-        size: {
-          type: Number, // File size
-          required: true,
-        },
-      },
-    ],
+    images: [{ type: String }],
     reviews: [
       {
         id: {

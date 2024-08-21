@@ -9,6 +9,7 @@ import { LuUserCircle } from "react-icons/lu";
 import { FaRegUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { updateTabName } from "../../../../Redux/Name/Name";
+import { MdLogout } from "react-icons/md";
 
 const Sidebar = ({ open }: any) => {
   const navigate = useNavigate();
@@ -93,8 +94,10 @@ const Sidebar = ({ open }: any) => {
       {/* Logout Button */}
       <div className="logout-button-container">
         <button className="logout-button" onClick={handleLogout}>
-          <MdAddCall /> {/* Example icon, replace with your logout icon */}
-          Logout
+          <NavLink className="nav-link" to="">
+            <MdLogout />
+            {open ? "Logout" : ""}
+          </NavLink>
         </button>
       </div>
     </div>

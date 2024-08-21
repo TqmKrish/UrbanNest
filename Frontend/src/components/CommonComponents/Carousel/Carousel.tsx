@@ -1,6 +1,7 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "./Carousel.scss";
+import { envUrl } from "../../../GlobalVariables";
 
 const CarouselComponent = ({ carouselImages }: any) => {
   return (
@@ -9,7 +10,7 @@ const CarouselComponent = ({ carouselImages }: any) => {
         <Carousel.Item key={index} className="h-100">
           <img
             className="d-block w-100 carousel-image"
-            src={image}
+            src={envUrl + image}
             alt="First slide"
           />
           {/* <Carousel.Caption>

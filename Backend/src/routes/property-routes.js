@@ -9,9 +9,9 @@ const {
   getAllRentalProperties,
   getRentalPropertyById,
 } = require("../controllers/mongodb/property-controller");
-// const upload = require("../config/multerConfig");
+const upload = require("../config/multerConfig");
 
-const upload = multer({ dest: "../Backend/src/public" });
+// const upload = multer({ dest: "public" });
 
 router.get("/buy", errorHandler(getAllPropertiesForPurchase));
 router.get("/buy/:id", errorHandler(getPropertyForPurchaseById));

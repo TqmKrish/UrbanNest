@@ -15,6 +15,7 @@ import {
   ReviewDetails,
 } from "../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import ModalComponent from "../Modal/ModalComponent";
+import axiosInterceptor from "../../../../Interceptor/axiosInterceptor";
 
 interface params {
   propertyType: string;
@@ -38,6 +39,7 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
   const [property, setProperty] = useState<PropertyDetails>(
     {} as PropertyDetails
   );
+  let [showNumber, toggleNumber] = useState<boolean>(false);
   const axiosInstance = axios.create();
   MockAPI(axiosInstance);
 
@@ -99,17 +101,25 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
   // };
 
   useEffect(() => {
-    console.log(propertyType);
     if (id) {
-      axiosInstance
-        .get(`/properties/${propertyType}/${id}`)
-        .then((res) => {
-          console.log(res);
-          setProperty(res.data.property);
+      axiosInterceptor
+        .get(`/property/${propertyType}/${id}`)
+        .then((response: any) => {
+          console.log(response);
+          setProperty(response.data.property);
         })
         .catch((error) => {
           console.log("error", error);
         });
+      // axiosInstance
+      //   .get(`/properties/${propertyType}/${id}`)
+      //   .then((res) => {
+      //     console.log(res);
+      //     setProperty(res.data.property);
+      //   })
+      //   .catch((error) => {
+      //     console.log("error", error);
+      //   });
     }
   }, []);
 
@@ -134,6 +144,11 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+
+  const handleToggleNumber = () => {
+    showNumber = !showNumber;
+    toggleNumber(showNumber);
   };
 
   return (
@@ -301,7 +316,11 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
                 src={property?.sellerDetails?.profilePicture}
                 alt="profile-pic-seller"
               />
-              <h3 className="mb-0">{property?.sellerDetails?.fullName}</h3>
+              <h3 className="mb-0">
+                {property?.sellerDetails?.firstName +
+                  " " +
+                  property?.sellerDetails?.lastName}
+              </h3>
               <FaChevronRight className="ms-auto" />
             </div>
             <button type="button" className="btn chat-with-seller-btn">
@@ -309,8 +328,13 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
             </button>
             <div className="d-flex align-items-center justify-content-center gap-2">
               <IoCallOutline />
-              <span>**********</span>
-              <a>Show Number</a>
+              {!showNumber && <span>**********</span>}
+              {showNumber && (
+                <span>{property?.sellerDetails?.contactNumber}</span>
+              )}
+              <a className="cursor-pointer" onClick={handleToggleNumber}>
+                Show Number
+              </a>
             </div>
           </div>
           <div className="p-3 card-details d-flex flex-column bg-white mb-2">

@@ -4,7 +4,7 @@ import image3 from "../../../assets/images/logo_make_11_06_2023_8.jpg";
 import LandlordProfileImage from "../../../assets/images/images.jpeg";
 import { PropertyDetails } from "./PropertiesForBuy";
 
-export const propertiesForRent: PropertyDetails[] = [
+export const propertiesForRent: any[] = [
   {
     id: "2002000200020099",
     name: "Cozy Loft",

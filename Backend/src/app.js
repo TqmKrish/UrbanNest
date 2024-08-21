@@ -16,6 +16,7 @@ const app = express();
 connectMongoDB();
 app.use(express.urlencoded({ extended: false }));
 app.use(generateLogReqRes("log.txt"));
+app.use(express.static('public'))
 
 app.use(bodyParser.json());
 app.use(cors());
