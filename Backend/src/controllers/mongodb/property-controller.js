@@ -29,7 +29,6 @@ const getAllPropertiesForPurchase = async (req, res) => {
 };
 
 const getPropertyForPurchaseById = async (req, res) => {
-  console.log(req.params.id);
   const property = await Property.findById(req.params.id)
     .populate("sellerId")
     .exec();
