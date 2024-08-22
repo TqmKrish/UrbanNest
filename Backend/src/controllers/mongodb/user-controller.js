@@ -1,7 +1,29 @@
 const { User, Admin } = require("../../models/mongo/User/user-model");
 
 const handleGetAllUsers = async (req, res) => {
-  const allUsers = await User.find({});
+  let allUsers = await User.find(
+    {},
+    {
+      email: 1,
+      role: 1,
+      firstName: 1,
+      lastName: 1,
+      contactNumber: 1,
+      verified: 1,
+      createdAt: 1,
+      profilePicture: 1,
+    }
+  )
+    .lean()
+    .exec();
+
+  allUsers = allUsers.map((user) => {
+    const { _id, ...rest } = user; // Destructure `_id` and collect the rest
+    return {
+      id: _id.toString(), // Convert `_id` to string and rename to `id`
+      ...rest, // Include other fields
+    };
+  });
   return res.status(200).json({ data: allUsers, isActionSuccessful: true });
 };
 

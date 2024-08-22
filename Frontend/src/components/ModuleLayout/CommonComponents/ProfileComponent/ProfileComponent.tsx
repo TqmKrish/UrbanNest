@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FaCamera, FaEye, FaTrash } from "react-icons/fa";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { FiEdit2 } from "react-icons/fi";
-import { envUrl } from "../../../../GlobalVariables";
+import { envUrl, fallbackImageUrl } from "../../../../GlobalVariables";
 import axios from "axios";
 import "./ProfileComponent.scss";
 import { UserInfo } from "../../../../mockAPI/DB/Users/Users";
@@ -143,6 +143,10 @@ const ProfileComponent: React.FC = () => {
             src={previewUrl}
             alt={`${editableAdmin.firstName}'s profile`}
             className="admin-profile-picture"
+            onError={(e: any) => {
+              e.target.onerror = null; // Prevent infinite loop if fallback also fails
+              e.target.src = fallbackImageUrl; // Set the fallback image
+            }}
           />
           {isEditing && (
             <IconButton

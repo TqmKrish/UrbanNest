@@ -2,6 +2,8 @@ import React from "react";
 import "./UserCard.scss";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { UserInfo } from "../../../../../mockAPI/DB/Users/Users";
+import moment from "moment";
+import { fallbackImageUrl } from "../../../../../GlobalVariables";
 
 interface ParamInterface {
   user: UserInfo;
@@ -16,6 +18,10 @@ const UserCard: React.FC<ParamInterface> = ({ user, index }) => {
           src={user.profilePicture}
           alt={`${user.firstName}'s profile`}
           className="profile-picture"
+          onError={(e: any) => {
+            e.target.onerror = null; // Prevent infinite loop if fallback also fails
+            e.target.src = fallbackImageUrl; // Set the fallback image
+          }}
         />
       </div>
       <div className="user-details">
@@ -41,7 +47,8 @@ const UserCard: React.FC<ParamInterface> = ({ user, index }) => {
           <strong>ID:</strong> {user.id}
         </p>
         <p>
-          <strong>Created At:</strong> {user.createdAt.toDateString()}
+          <strong>Created At:</strong>{" "}
+          {moment(user.createdAt).format("DD/MM/YYYY")}
         </p>
       </div>
     </div>

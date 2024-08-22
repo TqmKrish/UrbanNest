@@ -37,11 +37,11 @@ const Sidebar = ({ open }: any) => {
       url: `/${moduleName}/admin/contact`,
       icon: <MdAddCall />,
     },
-    // {
-    //   name: "Users",
-    //   url: `/${moduleName}/admin/users`,
-    //   icon: <FaRegUser />,
-    // },
+    {
+      name: "Users",
+      url: `/${moduleName}/admin/users`,
+      icon: <FaRegUser />,
+    },
     {
       name: "Profile",
       url: `/${moduleName}/admin/profile`,

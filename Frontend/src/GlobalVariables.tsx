@@ -5,3 +5,4 @@ export const appDetails = {
 };
 export const moduleName = "moduleName";
 export const envUrl = "http://localhost:5000/";
+export const fallbackImageUrl = envUrl + "fallback-image.jpeg";

@@ -159,7 +159,10 @@ const ContactUs: React.FC = () => {
               height: "100%",
             }}
           >
-            <CarouselComponent carouselImages={demoImages} />
+            <CarouselComponent
+              carouselImages={demoImages}
+              parent="contact-us"
+            />
           </Box>
         </Grid>
       </Grid>

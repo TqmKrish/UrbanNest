@@ -3,14 +3,14 @@ import Carousel from "react-bootstrap/Carousel";
 import "./Carousel.scss";
 import { envUrl } from "../../../GlobalVariables";
 
-const CarouselComponent = ({ carouselImages }: any) => {
+const CarouselComponent = ({ carouselImages, parent }: any) => {
   return (
     <Carousel data-bs-theme="dark" className="h-100">
       {carouselImages?.map((image: any, index: number) => (
         <Carousel.Item key={index} className="h-100">
           <img
             className="d-block w-100 carousel-image"
-            src={envUrl + image}
+            src={parent === "contact-us" ? image : envUrl + image}
             alt="First slide"
           />
           {/* <Carousel.Caption>

@@ -6,17 +6,19 @@ import { PropertyDetails } from "../../../../../mockAPI/DB/Properties/Properties
 import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
 import UserCard from "../UserCard/UserCard";
 import { UserInfo } from "../../../../../mockAPI/DB/Users/Users";
+import axiosInterceptor from "../../../../../Interceptor/axiosInterceptor";
+import { envUrl } from "../../../../../GlobalVariables";
 
 const UsersComponent = () => {
-  const axiosInstance = axios.create();
-  MockAPI(axiosInstance);
-
   let [users, setUsers] = useState<UserInfo[]>([]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/getAllProperties/buy")
-
+    axiosInterceptor
+      .get(envUrl + "api/user/")
+      .then((response: any) => {
+        console.log(response);
+        setUsers(response.data.data);
+      })
       .catch((error: any) => {
         console.log("error", error);
       });

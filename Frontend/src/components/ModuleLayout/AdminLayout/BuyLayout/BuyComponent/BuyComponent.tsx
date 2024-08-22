@@ -7,6 +7,7 @@ import { PropertyDetails } from "../../../../../mockAPI/DB/Properties/Properties
 import PropertyCard from "../../../CommonComponents/PropertyCard/PropertyCard";
 import AISearch from "../../AISearch/AISearch";
 import axiosInterceptor from "../../../../../Interceptor/axiosInterceptor";
+import { envUrl } from "../../../../../GlobalVariables";
 
 const BuyComponent = () => {
   const searchValue = useSelector((state: any) => state.search.value);
@@ -36,16 +37,23 @@ const BuyComponent = () => {
     //   });
   }, []);
 
-  useEffect(() => {
-    axiosInstance
-      .get(`/filterProperties/${searchValue}`)
-      .then((res: any) => {
-        setProperties(res.data.properties);
-      })
-      .catch((error: any) => {
-        console.log("error", error);
-      });
-  }, [searchValue]);
+  // useEffect(() => {
+  //   console.log("hello");
+  //   axiosInterceptor
+  //     .get(`${envUrl}api/buy/filter/${searchValue}`)
+  //     .then((response: any) => {
+  //       console.log(response);
+  //       setProperties(response.data.properties);
+  //     });
+  //   // axiosInstance
+  //   //   .get(`/filterProperties/${searchValue}`)
+  //   //   .then((res: any) => {
+  //   //     setProperties(res.data.properties);
+  //   //   })
+  //   //   .catch((error: any) => {
+  //   //     console.log("error", error);
+  //   //   });
+  // }, [searchValue]);
 
   const handleToggleFavorite = (id: string, index: number) => {
     let _properties = [...properties];

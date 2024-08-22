@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSearch } from "../../../../Redux/Searchbar/Searchbar";
 import { updateTabName } from "../../../../Redux/Name/Name";
 import { Popover, Typography } from "@mui/material";
+import { envUrl, fallbackImageUrl } from "../../../../GlobalVariables";
 
 const Header = ({ onDrawerToggle, open }: any) => {
   const [value, setValue] = useState<string>("");
@@ -124,8 +125,12 @@ const Header = ({ onDrawerToggle, open }: any) => {
           <span className="avatar-wrapper">
             <img
               alt=""
-              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              src={envUrl + userDetails.profilePicture}
               className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+              onError={(e: any) => {
+                e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                e.target.src = fallbackImageUrl; // Set the fallback image
+              }}
             />
           </span>
           <ul className="px-0 mb-0">

@@ -8,6 +8,7 @@ const {
   createNewSale,
   getAllRentalProperties,
   getRentalPropertyById,
+  // filterPropertiesForPurchase,
 } = require("../controllers/mongodb/property-controller");
 const upload = require("../config/multerConfig");
 
@@ -15,6 +16,7 @@ const upload = require("../config/multerConfig");
 
 router.get("/buy", errorHandler(getAllPropertiesForPurchase));
 router.get("/buy/:id", errorHandler(getPropertyForPurchaseById));
+// router.get("/buy/filter", errorHandler(filterPropertiesForPurchase));
 router.post("/sell", upload.any(), errorHandler(createNewSale));
 router.get("/rent", errorHandler(getAllRentalProperties));
 router.get("/rent/:id", errorHandler(getRentalPropertyById));

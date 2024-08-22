@@ -41,8 +41,44 @@ const getPropertyForPurchaseById = async (req, res) => {
   res.status(200).json({ property: propertyData, isActionSuccessful: true });
 };
 
+// const filterPropertiesForPurchase = async (req, res) => {
+//   const searchTerm = req.query.searchTerm || "";
+
+//   if (!searchTerm) {
+//     return getAllPropertiesForPurchase(req, res);
+//   }
+
+//   const sanitizedSearchTerm = searchTerm
+//     .trim()
+//     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+//   const searchQuery = {
+//     $or: [
+//       { title: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { description: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { location: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { projectName: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { type: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { furnishing: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { constructionStatus: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       { facing: { $regex: sanitizedSearchTerm, $options: "i" } },
+//       // Numeric fields excluded from regex
+//     ],
+//   };
+
+//   const properties = await Property.find(searchQuery).lean().exec();
+//   const results = properties.map((property) => {
+//     const { _id, ...rest } = property.toObject();
+//     return {
+//       id: _id.toString(),
+//       ...rest,
+//     };
+//   });
+
+//   res.status(200).json({ properties: results, isActionSuccessful: true });
+// };
+
 const createNewSale = async (req, res) => {
-  console.log("req.files", req.files);
   const files = req.files.reduce((acc, file) => {
     // Extract the index from the fieldname
     const match = file.fieldname.match(/images\[(\d+)\]/);
@@ -110,9 +146,11 @@ const getAllRentalProperties = async (req, res) => {
 const getRentalPropertyById = async (req, res) => {
   res.status(200).json({ message: "hi, rent id" });
 };
+
 module.exports = {
   getAllPropertiesForPurchase,
   getPropertyForPurchaseById,
+  // filterPropertiesForPurchase,
   createNewSale,
   getAllRentalProperties,
   getRentalPropertyById,

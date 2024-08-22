@@ -16,6 +16,7 @@ import {
 } from "../../../../mockAPI/DB/Properties/PropertiesForBuy";
 import ModalComponent from "../Modal/ModalComponent";
 import axiosInterceptor from "../../../../Interceptor/axiosInterceptor";
+import { fallbackImageUrl } from "../../../../GlobalVariables";
 
 interface params {
   propertyType: string;
@@ -252,6 +253,10 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
                       height={50}
                       className="reviewer-image"
                       alt="reviewer"
+                      onError={(e: any) => {
+                        e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                        e.target.src = fallbackImageUrl; // Set the fallback image
+                      }}
                     />
                     <div className="reviewer-info">
                       <div className="reviewer-name-rating">
@@ -315,6 +320,10 @@ const ViewComponent: React.FC<params> = ({ propertyType }) => {
                 className="seller-profile-pic"
                 src={property?.sellerDetails?.profilePicture}
                 alt="profile-pic-seller"
+                onError={(e: any) => {
+                  e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                  e.target.src = fallbackImageUrl; // Set the fallback image
+                }}
               />
               <h3 className="mb-0">
                 {property?.sellerDetails?.firstName +
