@@ -84,8 +84,9 @@
   fill: rgb(79, 70, 229);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 8px 10px;
+  padding: 8px 0;
   cursor: pointer;
   width: calc(100% - 32px); /* Adjust padding and margin */
   font-weight: bold;

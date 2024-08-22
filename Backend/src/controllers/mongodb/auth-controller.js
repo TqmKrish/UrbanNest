@@ -1,3 +1,4 @@
+const { Token } = require("../../models/mongo/token/token-model");
 const { User } = require("../../models/mongo/User/user-model");
 const { comparePassword } = require("../../utils/password-utils");
 const { generateJWT, saveTokenInDB } = require("../../utils/token-utils");
@@ -6,7 +7,11 @@ const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     // Find user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOneAndUpdate(
+      { email: email }, // Query to find user by email
+      { $set: { lastLogin: Date.now() } }, // Update the lastLogin field
+      { new: true, upsert: false } // Ensure no new document is created
+    );
     if (!user) {
       console.log("email wrong");
       return res.status(400).json({ message: "Invalid email or password" });
@@ -30,7 +35,6 @@ const handleLogin = async (req, res) => {
       contactNumber: user.contactNumber,
       address: user.address,
       profilePicture: user.profilePicture,
-      lastLogin: user.lastLogin,
       bio: user.role === "user" ? user.bio : undefined,
       propertiesListed:
         user.role === "user" ? user.propertiesListed : undefined,
@@ -68,7 +72,12 @@ const handleLogin = async (req, res) => {
   }
 };
 
-const handleLogout = () => {};
+const handleLogout = async (req, res) => {
+  console.log(req.body.id);
+  const isTokenDeleted = await Token.findOneAndDelete({ userId: req.body.id });
+  console.log(isTokenDeleted);
+  return res.status(200).json({ message: "Logged out successfully" });
+};
 const handleRegister = () => {};
 
 module.exports = { handleLogin, handleLogout, handleRegister };

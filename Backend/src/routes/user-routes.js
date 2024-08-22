@@ -7,6 +7,7 @@ const {
   handleCreateNewUser,
 } = require("../controllers/mongodb/user-controller");
 const { errorHandler } = require("../helpers/errorHandler");
+const upload = require("../config/multerConfig");
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get("/", errorHandler(handleGetAllUsers));
 router
   .route("/:id")
   .get(errorHandler(handleGetUserById))
-  .patch(errorHandler(handleUpdateUserById))
+  .patch(upload.any(), errorHandler(handleUpdateUserById))
   .delete(errorHandler(handleDeleteUserById));
 
 router.post("/create-user", errorHandler(handleCreateNewUser));

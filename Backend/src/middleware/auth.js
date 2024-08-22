@@ -1,21 +1,26 @@
 const { getUser } = require("../services/auth-service");
 
 const isAuthenticated = (req, res, next) => {
-  const authHeaderValue = req.headers["authorization"];
-  //   req.user = null;
-  if (!authHeaderValue || !authHeaderValue.startsWith("Bearer")) {
+  try {
+    const authHeaderValue = req.headers["authorization"];
+    //   req.user = null;
+    if (!authHeaderValue || !authHeaderValue.startsWith("Bearer")) {
+      return res.status(401).json({ message: "Unauthorized User" });
+    }
+
+    const token = authHeaderValue.split("Bearer ")[1];
+    const user = getUser(token);
+
+    if (user && user.role === "admin") {
+      req.user = user;
+      return next();
+    }
+
+    return res.status(401).json({ message: "Unauthorized User" });
+  } catch (error) {
+    console.log(error);
     return res.status(401).json({ message: "Unauthorized User" });
   }
-
-  const token = authHeaderValue.split("Bearer ")[1];
-  const user = getUser(token);
-
-  if (user && user.role === "admin") {
-    req.user = user;
-    return next();
-  }
-
-  return res.status(401).json({ message: "Unauthorized User" });
 };
 
 const restrictRouteTo = (roles = []) => {

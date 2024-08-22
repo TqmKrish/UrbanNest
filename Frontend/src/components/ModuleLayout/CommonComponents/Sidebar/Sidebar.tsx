@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { appDetails, moduleName } from "../../../../GlobalVariables";
+import { appDetails, envUrl, moduleName } from "../../../../GlobalVariables";
 import "./Sidebar.scss";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineSell } from "react-icons/md";
@@ -10,6 +10,7 @@ import { FaRegUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { updateTabName } from "../../../../Redux/Name/Name";
 import { MdLogout } from "react-icons/md";
+import axiosInterceptor from "../../../../Interceptor/axiosInterceptor";
 
 const Sidebar = ({ open }: any) => {
   const navigate = useNavigate();
@@ -50,9 +51,19 @@ const Sidebar = ({ open }: any) => {
 
   const handleLogout = () => {
     // Implement your logout functionality here
-    localStorage.clear();
-    navigate("/auth/login");
-    console.log("Logging out...");
+    const id = JSON.parse(localStorage.getItem("userDetails") ?? "").id;
+
+    axiosInterceptor
+      .post(envUrl + "api/auth/logout", { id })
+      .then((response: any) => {
+        localStorage.clear();
+        navigate("/auth/login");
+        console.log("Logging out...");
+      })
+      .catch((error: any) => {
+        console.error("error", error);
+        alert("Error in logging out, Something went wrong");
+      });
   };
 
   const changeTabName = (name: string) => {
@@ -94,10 +105,8 @@ const Sidebar = ({ open }: any) => {
       {/* Logout Button */}
       <div className="logout-button-container">
         <button className="logout-button" onClick={handleLogout}>
-          <NavLink className="nav-link" to="">
-            <MdLogout />
-            {open ? "Logout" : ""}
-          </NavLink>
+          <MdLogout />
+          {open ? "Logout" : ""}
         </button>
       </div>
     </div>

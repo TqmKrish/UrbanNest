@@ -1,14 +1,15 @@
 export interface UserInfo {
   id: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   role: "Buyer" | "Seller" | "Agent" | "admin";
   contactNumber: string;
-  address?: string;
+  address: string;
   profilePicture: string;
   verified?: boolean;
-  lastLogin: Date;
+  lastLogin?: Date;
   preferredContactMethod?: "email" | "phone";
   bio: string;
   createdAt: Date;
@@ -23,9 +24,10 @@ export interface UserInfo {
   department?: string;
   managedPropertiesCount?: number;
   region?: string;
+  socialLinks: { facebook: string; linkedin: string };
 }
 
-export const demoUsers: UserInfo[] = [
+export const demoUsers: any[] = [
   {
     id: "user-1001",
     fullName: "John Doe",

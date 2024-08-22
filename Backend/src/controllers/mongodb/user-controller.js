@@ -59,8 +59,73 @@ const handleGetUserById = async (req, res) => {
 };
 
 const handleUpdateUserById = async (req, res) => {
-  const user = await User.findByIdAndUpdate(req.params.id, {}); //update info here
-  return res.status(200).json({ data: user, isActionSuccessful: true });
+  // Process the file if it's present
+  let profilePicturePath = null;
+  if (req.files.length) {
+    profilePicturePath = req.files[0].filename;
+  }
+
+  // Extract the other fields from the request body
+  const {
+    id,
+    firstName,
+    lastName,
+    username,
+    email,
+    contactNumber,
+    address,
+    linkedin,
+    facebook,
+    notificationsEnabled,
+  } = req.body;
+
+  // Find the user and update fields
+  const user = await User.findById(id);
+  if (!user) {
+    return res
+      .status(404)
+      .json({ isActionSuccessful: false, message: "User not found" });
+  }
+
+  user.firstName = firstName || user.firstName;
+  user.lastName = lastName || user.lastName;
+  user.username = username || user.username;
+  user.email = email || user.email;
+  user.contactNumber = contactNumber || user.contactNumber;
+  user.address = address || user.address;
+  user.socialLinks.linkedin = linkedin || user.socialLinks.linkedin;
+  user.socialLinks.facebook = facebook || user.socialLinks.facebook;
+  user.notificationsEnabled =
+    notificationsEnabled !== undefined
+      ? notificationsEnabled
+      : user.notificationsEnabled;
+
+  if (profilePicturePath) {
+    user.profilePicture = profilePicturePath;
+  }
+
+  await user.save();
+  const userData = {
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    contactNumber: user.contactNumber,
+    address: user.address,
+    profilePicture: user.profilePicture,
+    bio: user.role === "user" ? user.bio : undefined,
+    propertiesListed: user.role === "user" ? user.propertiesListed : undefined,
+    verified: user.verified,
+    rating: user.role === "user" ? user.rating : undefined,
+    socialLinks: user.socialLinks,
+    permissions: user.role === "admin" ? user.permissions : undefined,
+    notificationsEnabled: user.notificationsEnabled,
+    managedPropertiesCount:
+      user.role === "admin" ? user.managedPropertiesCount : undefined,
+  };
+  return res.status(200).json({ user: userData, isActionSuccessful: true });
 };
 
 const handleDeleteUserById = async (req, res) => {

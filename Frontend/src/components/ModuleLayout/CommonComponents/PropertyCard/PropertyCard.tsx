@@ -50,7 +50,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       >
         <img
           className="property-image"
-          src={envUrl + property.images[0]}
+          src={envUrl + property.images[index % 3]}
           alt={property.name}
         />
         <div className="card-details">

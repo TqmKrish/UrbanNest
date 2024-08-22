@@ -14,12 +14,12 @@ const UserCard: React.FC<ParamInterface> = ({ user, index }) => {
       <div className="image-container">
         <img
           src={user.profilePicture}
-          alt={`${user.fullName}'s profile`}
+          alt={`${user.firstName}'s profile`}
           className="profile-picture"
         />
       </div>
       <div className="user-details">
-        <h3>{user.fullName}</h3>
+        <h3>{user.firstName + " " + user.lastName}</h3>
         <p>
           <strong>Role:</strong> {user.role}
         </p>
