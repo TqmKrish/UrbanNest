@@ -1,6 +1,8 @@
+const { Token } = require("../models/mongo/token/token-model");
 const { getUser } = require("../services/auth-service");
 
-const isAuthenticated = (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
+  let token;
   try {
     const authHeaderValue = req.headers["authorization"];
     //   req.user = null;
@@ -8,7 +10,7 @@ const isAuthenticated = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized User" });
     }
 
-    const token = authHeaderValue.split("Bearer ")[1];
+    token = authHeaderValue.split("Bearer ")[1];
     const user = getUser(token);
 
     if (user && user.role === "admin") {
@@ -19,6 +21,7 @@ const isAuthenticated = (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized User" });
   } catch (error) {
     console.log(error);
+    await Token.findOneAndDelete({ token: token });
     return res.status(401).json({ message: "Unauthorized User" });
   }
 };

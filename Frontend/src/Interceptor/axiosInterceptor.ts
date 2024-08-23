@@ -31,4 +31,25 @@ axiosInterceptor.interceptors.request.use(
   }
 );
 
+axiosInterceptor.interceptors.response.use(
+  (response) => {
+    // If the response is successful, just return the response
+    return response;
+  },
+  (error) => {
+    // Check for 401 Unauthorized status
+    if (error.response?.status === 401) {
+      // Clear token from local storage
+      localStorage.clear();
+
+      // Redirect to login page
+      window.location.href = "/auth/login"; // Use window.location.href to redirect
+    }
+
+    // Handle other errors
+    console.error("Interceptor Response Error", error);
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInterceptor;

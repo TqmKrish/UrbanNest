@@ -7,11 +7,12 @@ const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     // Find user by email
-    const user = await User.findOneAndUpdate(
-      { email: email }, // Query to find user by email
-      { $set: { lastLogin: Date.now() } }, // Update the lastLogin field
-      { new: true, upsert: false } // Ensure no new document is created
-    );
+    const user = await User.findOne({ email });
+    // const user = await User.findOneAndUpdate(
+    //   { email: email }, // Query to find user by email
+    //   { $set: { lastLogin: Date.now() } }, // Update the lastLogin field
+    //   { new: true, upsert: false } // Ensure no new document is created
+    // );
     if (!user) {
       console.log("email wrong");
       return res.status(400).json({ message: "Invalid email or password" });
